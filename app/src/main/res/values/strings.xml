@@ -14,4 +14,8 @@
 
     <string name="error">Ошибка</string>
     <string name="wrong_sign_in_credentials">Логин или пароль введены неверно</string>
+
+    <string name="title_menu">Выход в меню</string>
+    <string name="title_logo">Лого</string>
+    <string name="title_profile">Профиль</string>
 </resources>

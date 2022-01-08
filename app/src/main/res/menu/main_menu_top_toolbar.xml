@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".MainActivity">
+<!--    <item-->
+<!--        android:id="@+id/nav_menu"-->
+<!--        android:icon="@drawable/ic_menu_top_toolbar_24"-->
+<!--        android:title="@string/title_menu"-->
+<!--        app:showAsAction="ifRoom" />-->
+<!--    <item-->
+<!--        android:id="@+id/nav_icon"-->
+<!--        android:icon="@mipmap/ic_logo_top_toolbar_foreground"-->
+<!--        android:title="@string/title_logo"-->
+<!--        app:showAsAction="always" />-->
+    <item
+        android:id="@+id/nav_profile_icon"
+        android:icon="@mipmap/ic_profile_foreground"
+        android:title="@string/title_profile"
+        app:showAsAction="always" />
+</menu>

@@ -1,4 +1,4 @@
-package com.example.hostapp;
+package com.example.hostapp.login;
 
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;

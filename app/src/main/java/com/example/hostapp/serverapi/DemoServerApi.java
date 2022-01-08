@@ -17,5 +17,4 @@ public class DemoServerApi {
     public static boolean checkSignIn(String login, String password) {
         return CORRECT_LOGIN_PAIRS.containsKey(login) && Objects.equals(CORRECT_LOGIN_PAIRS.get(login), password);
     }
-
 }

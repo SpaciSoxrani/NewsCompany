@@ -1,27 +1,25 @@
-package com.example.hostapp;
+package com.example.hostapp.login;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.AppCompatTextView;
 
+import com.example.hostapp.mainMenu.MainActivity;
+import com.example.hostapp.R;
+import com.example.hostapp.utils.UiUtils;
 import com.example.hostapp.serverapi.DemoServerApi;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.lifecycle.ViewModelProviders;
 
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener  {
     private LoginViewModel loginViewModel;
-    
-    //private AppCompatTextView signUpButton;
-    private MaterialButton signInButton;
+
     private TextInputLayout loginLayout;
     private TextInputEditText loginEditText;
     private TextInputLayout passwordLayout;
@@ -33,7 +31,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        signInButton = findViewById(R.id.signInButton);
+        //private AppCompatTextView signUpButton;
+        MaterialButton signInButton = findViewById(R.id.signInButton);
 
         loginLayout = findViewById(R.id.loginLayout);
         loginEditText = findViewById(R.id.loginEditText);
@@ -65,10 +64,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.signInButton:
-                SignIn();
-                break;
+        if (v.getId() == R.id.signInButton) {
+            SignIn();
         }
     }
 
