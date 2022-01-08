@@ -4,7 +4,14 @@
     <string name="password">Password</string>
     <string name="sign_in">LOGIN</string>
     <string name="sign_up">Создать аккаунт?</string>
+    <string name="button_ok">ОК</string>
 
     <string name="sign_in_text">Sign In</string>
     <string name="sign_in_small_text">Sign in now to access your CRM account.</string>
+
+    <string name="enter_login">Введите логин</string>
+    <string name="enter_password">Введите пароль</string>
+
+    <string name="error">Ошибка</string>
+    <string name="wrong_sign_in_credentials">Логин или пароль введены неверно</string>
 </resources>
