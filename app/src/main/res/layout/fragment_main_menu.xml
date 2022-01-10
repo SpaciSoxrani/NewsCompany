@@ -8,20 +8,27 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="?android:actionBarSize"
         android:orientation="vertical">
 
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <androidx.appcompat.widget.LinearLayoutCompat
+<!--            <androidx.appcompat.widget.LinearLayoutCompat-->
 
-                android:id="@+id/card_container"
+<!--                android:id="@+id/card_container"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="match_parent"-->
+<!--                android:layout_marginTop="@dimen/card_vertical_margin"-->
+<!--                android:orientation="vertical"/>-->
+
+            <GridLayout
+                android:id="@+id/grid_container"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/card_vertical_margin"
-                android:orientation="vertical" />
+                android:columnCount="2"/>
+
         </androidx.core.widget.NestedScrollView>
     </LinearLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
