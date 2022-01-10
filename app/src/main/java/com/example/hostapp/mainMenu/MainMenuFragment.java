@@ -9,6 +9,7 @@ import android.widget.GridLayout;
 import android.widget.LinearLayout;
 import android.widget.TableLayout;
 import android.widget.TableRow;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import com.example.hostapp.R;
@@ -21,6 +22,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.navigation.NavController;
 
 import com.example.hostapp.login.LoginViewModel;
 import com.example.hostapp.serverapi.DemoServerApi;
@@ -30,6 +32,7 @@ import java.util.List;
 public class MainMenuFragment extends Fragment {
     private MainMenuViewModel mainMenuViewModel;
     private View card;
+
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -49,27 +52,26 @@ public class MainMenuFragment extends Fragment {
             }
         });
 
-        mainMenuViewModel.getSelectedMenuItem().observe(getViewLifecycleOwner(), new Observer<MenuItem>() {
-            @Override
-            public void onChanged(MenuItem menuItem) {
-                if(menuItem==null)
-                    return;
-                textViewDescription.setText(menuItem.name);
-                textViewIconDescription.setImageDrawable(getResources().getDrawable(MenuItem.icons[menuItem.icon]));
-                imageViewItem.setImageDrawable(getResources().getDrawable(MenuItem.backgrounds[menuItem.image]));
-            }
-        });
+//        mainMenuViewModel.getSelectedMenuItem().observe(getViewLifecycleOwner(), new Observer<MenuItem>() {
+//            @Override
+//            public void onChanged(MenuItem menuItem) {
+//                if (menuItem == null)
+//                    return;
+//                flag.setText(menuItem.name);
+//            }
+//        });
 
         mainMenuViewModel.setMenuItems(DemoServerApi.ITEMS);
         setHasOptionsMenu(true);
 
-        return  root;
+        return root;
     }
+
 
     private void redrawEventsCards(List<MenuItem> menuItems, GridLayout container) {
         container.removeAllViews();
         int TABLE_COLUMNS = 2;
-        int TABLE_ROWS = menuItems.size()/2 + menuItems.size()%2;
+        int TABLE_ROWS = menuItems.size() / 2 + menuItems.size() % 2;
         container.setRowCount(TABLE_ROWS);
 
         for (int i = 0; i < menuItems.size(); i++) {
@@ -83,6 +85,13 @@ public class MainMenuFragment extends Fragment {
             imageView.setImageResource(MenuItem.backgrounds[menuItem.image]);
             imageIconView.setImageResource(MenuItem.icons[menuItem.icon]);
             textViewName.setText(menuItem.name);
+
+            card.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mainMenuViewModel.setSelectedMenuItem(menuItem);
+                }
+            });
 
             container.addView(card);
 

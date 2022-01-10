@@ -9,13 +9,16 @@
         android:id="@+id/navigation_main_menu"
         android:name="com.example.hostapp.mainMenu.MainMenuFragment"
         android:label="@string/title_menu"
-        tools:layout="@layout/fragment_main_menu" />
+        tools:layout="@layout/fragment_main_menu">
+        <action android:id="@+id/action_navigation_main_menu_to_navigation_profile"
+            app:destination="@id/navigation_profile"/>
+    </fragment>
 
-<!--    <fragment-->
-<!--        android:id="@+id/navigation_map"-->
-<!--        android:name="com.example.lobsters.ui.map.MapFragment"-->
-<!--        android:label="@string/title_map"-->
-<!--        tools:layout="@layout/fragment_map" />-->
+    <fragment
+        android:id="@+id/navigation_profile"
+        android:name="com.example.hostapp.profile.ProfileFragment"
+        android:label="@string/title_profile"
+        tools:layout="@layout/fragment_profile" />
 
 <!--    <fragment-->
 <!--        android:id="@+id/navigation_profile"-->
