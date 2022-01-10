@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatImageView;
@@ -17,7 +18,7 @@ public class ProfileFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_profile, container, false);
 
-        final AppCompatImageView imageViewItem = root.findViewById(R.id.profile_logo);
+        final AppCompatImageView imageViewItem = root.findViewById(R.id.profile_image);
         return root;
     }
 }

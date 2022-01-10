@@ -42,6 +42,7 @@ public class MainMenuFragment extends Fragment {
         final AppCompatTextView textViewDescription = root.findViewById(R.id.text_description);
         final AppCompatImageView textViewIconDescription = root.findViewById(R.id.icon_description);
         final AppCompatImageView imageViewItem = root.findViewById(R.id.main_card);
+
         //final LinearLayoutCompat cardsContainer = root.findViewById(R.id.card_container);
         final GridLayout cardsContainer = root.findViewById(R.id.grid_container);
 

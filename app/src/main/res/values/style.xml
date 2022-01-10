@@ -10,4 +10,11 @@
     <style name="AccentButtonThemeOverlay">
         <item name="colorPrimary">@color/colorAccent</item>
     </style>
+
+    <style name="TitleMenuItemName">
+        <item name="android:textColor">@color/light_black</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:layout_marginTop">@dimen/card_horizontal_padding</item>
+        <item name="android:layout_marginLeft">@dimen/card_horizontal_padding</item>
+    </style>
 </resources>
