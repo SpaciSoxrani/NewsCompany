@@ -21,7 +21,7 @@
 
         <LinearLayout
         android:layout_width="@dimen/login_menu_width"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_centerInParent="true"
         android:layout_marginTop="@dimen/card_vertical_margin"
         android:layout_gravity="center_horizontal"
@@ -90,6 +90,17 @@
             android:inputType="phone"
             android:text="+7(900)111-22-33"/>
         </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/signInButton"
+                style="@style/LargeAccentButtonStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:layout_marginTop="25dp"
+                android:text="@string/edit"
+                android:textSize="@dimen/font_size_profile_position" />
+
         </LinearLayout>
     </LinearLayout>
 

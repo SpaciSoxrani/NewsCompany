@@ -24,5 +24,6 @@
     <string name="icon_description_mail">icon mail</string>
     <string name="hint_enter_mail">mail</string>
     <string name="hint_enter_phone">phone number</string>
+    <string name="edit">Редактировать</string>
 
 </resources>
