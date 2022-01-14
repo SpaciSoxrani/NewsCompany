@@ -26,4 +26,12 @@ public class PreSaleViewModel extends ViewModel {
         this.newMailings.setValue(newMailings);
     }
 
+    public MutableLiveData<List<NewMailing>> getUpdateNewMailings() {
+        return newMailings;
+    }
+
+    public void setUpdateNewMailings(List<NewMailing> newMailings) {
+        this.newMailings.setValue(newMailings);
+    }
+
 }

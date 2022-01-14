@@ -42,4 +42,5 @@ public class DemoServerApi {
         add(new NewMailing(1, "Test 2", "Закрыта", "ДВС"));
         add(new NewMailing(3, "Test 3", "Закрыта", "ДВС"));
     }};
+
 }
