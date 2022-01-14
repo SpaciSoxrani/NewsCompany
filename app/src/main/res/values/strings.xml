@@ -28,7 +28,9 @@
     <string name="hint_enter_phone">phone number</string>
     <string name="edit">Редактировать</string>
     <string name="add_new_entry">Новая рассылка</string>
-
+    <string name="table_header_depart">Департамент</string>
+    <string name="table_header_status">Статус</string>
+    <string name="table_header_name">Название</string>
 
 
 </resources>

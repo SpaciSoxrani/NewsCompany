@@ -1,6 +1,7 @@
 package com.example.hostapp.serverapi;
 
 import com.example.hostapp.mainMenu.MenuItem;
+import com.example.hostapp.preSale.NewMailing;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -34,5 +35,11 @@ public class DemoServerApi {
 
         add(new MenuItem(1, "Pre-sale", 7, 7));
         add(new MenuItem(1, "Лиды", 8, 8));
+    }};
+
+    public static final List<NewMailing> NEW_MAILINGS = new ArrayList<NewMailing>(){{
+        add(new NewMailing(0, "Test 1", "В работе", "ДВС"));
+        add(new NewMailing(1, "Test 2", "Закрыта", "ДВС"));
+        add(new NewMailing(3, "Test 3", "Закрыта", "ДВС"));
     }};
 }

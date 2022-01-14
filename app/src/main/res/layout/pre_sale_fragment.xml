@@ -25,5 +25,30 @@
             android:layout_marginTop="5dp"
             android:layout_marginLeft="@dimen/card_horizontal_margin"
             android:text="@string/add_new_entry"/>
+
+        <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/tableContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:stretchColumns="1"
+            android:layout_margin="@dimen/card_horizontal_margin"
+            tools:ignore="MissingConstraints">
+            <TableRow
+                android:id="@+id/tableRow">
+                <TextView
+                    android:text="@string/table_header_name"
+                    android:padding="3dp" />
+                <TextView
+                    android:text="@string/table_header_status"
+                    android:padding="3dp" />
+                <TextView
+                    android:text="@string/table_header_depart"
+                    android:padding="3dp" />
+            </TableRow>
+        </TableLayout>
     </LinearLayout>
+
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
