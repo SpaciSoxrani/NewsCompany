@@ -7,6 +7,14 @@
         <item name="android:paddingBottom">11dp</item>
         <item name="cornerRadius">9dip</item>
     </style>
+    <style name="SmallAccentButtonStyle">
+        <item name="materialThemeOverlay">@style/AccentButtonThemeOverlay</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:paddingTop">5dp</item>
+        <item name="android:paddingBottom">5dp</item>
+        <item name="cornerRadius">9dip</item>
+        <item name="android:textSize">13sp</item>
+    </style>
     <style name="AccentButtonThemeOverlay">
         <item name="colorPrimary">@color/colorAccent</item>
     </style>
@@ -16,5 +24,13 @@
         <item name="android:textSize">20sp</item>
         <item name="android:layout_marginTop">@dimen/card_horizontal_padding</item>
         <item name="android:layout_marginLeft">@dimen/card_horizontal_margin</item>
+    </style>
+
+    <style name="TextAppearance.App.CollapsingToolbar.Expanded" parent="TextAppearance.MaterialComponents.Headline5">
+        <item name="android:textColor">@color/light_black</item>
+    </style>
+
+    <style name="TextAppearance.App.CollapsingToolbar.Collapsed" parent="TextAppearance.MaterialComponents.Headline6">
+        <item name="android:textColor">?attr/colorOnPrimary</item>
     </style>
 </resources>

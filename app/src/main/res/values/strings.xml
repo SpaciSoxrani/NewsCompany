@@ -18,6 +18,8 @@
     <string name="title_menu">Меню</string>
     <string name="title_logo">Лого</string>
     <string name="title_profile">Профиль</string>
+    <string name="title_pre_sale">Pre-sale</string>
+    <string name="title_main">CRM ГК Хост</string>
 
     <string name="profile_name">Александра Морозова</string>
     <string name="profile_position">WEB Developer</string>
@@ -25,5 +27,8 @@
     <string name="hint_enter_mail">mail</string>
     <string name="hint_enter_phone">phone number</string>
     <string name="edit">Редактировать</string>
+    <string name="add_new_entry">Новая рассылка</string>
+
+
 
 </resources>

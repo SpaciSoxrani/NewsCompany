@@ -1,30 +1,23 @@
 package com.example.hostapp.mainMenu;
 
+import android.content.Context;
 import android.os.Bundle;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridLayout;
-import android.widget.LinearLayout;
-import android.widget.TableLayout;
-import android.widget.TableRow;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import com.example.hostapp.R;
 
 import androidx.appcompat.widget.AppCompatImageView;
 import androidx.appcompat.widget.AppCompatTextView;
-import androidx.appcompat.widget.LinearLayoutCompat;
-import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.lifecycle.ViewModelProviders;
-import androidx.navigation.NavController;
 
-import com.example.hostapp.login.LoginViewModel;
+import com.example.hostapp.preSale.PreSaleFragment;
 import com.example.hostapp.serverapi.DemoServerApi;
 
 import java.util.List;
@@ -32,16 +25,23 @@ import java.util.List;
 public class MainMenuFragment extends Fragment {
     private MainMenuViewModel mainMenuViewModel;
     private View card;
+    private Context context;
+    Fragment preSaleFragment;
 
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         mainMenuViewModel = new ViewModelProvider(this).get(MainMenuViewModel.class);
         View root = inflater.inflate(R.layout.fragment_main_menu, container, false);
-
-        final AppCompatTextView textViewDescription = root.findViewById(R.id.text_description);
-        final AppCompatImageView textViewIconDescription = root.findViewById(R.id.icon_description);
-        final AppCompatImageView imageViewItem = root.findViewById(R.id.main_card);
+        context = root.getContext();
 
         //final LinearLayoutCompat cardsContainer = root.findViewById(R.id.card_container);
         final GridLayout cardsContainer = root.findViewById(R.id.grid_container);
@@ -53,14 +53,19 @@ public class MainMenuFragment extends Fragment {
             }
         });
 
-//        mainMenuViewModel.getSelectedMenuItem().observe(getViewLifecycleOwner(), new Observer<MenuItem>() {
-//            @Override
-//            public void onChanged(MenuItem menuItem) {
-//                if (menuItem == null)
-//                    return;
-//                flag.setText(menuItem.name);
-//            }
-//        });
+        mainMenuViewModel.getSelectedMenuItem().observe(getViewLifecycleOwner(), new Observer<MenuItem>() {
+            @Override
+            public void onChanged(MenuItem menuItem) {
+                if (menuItem == null)
+                    return;
+                if(menuItem.getId() == 7) {
+                    FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                    preSaleFragment = new PreSaleFragment();
+                    transaction.replace(R.id.nav_host_fragment, preSaleFragment);
+                    transaction.commit();
+                }
+            }
+        });
 
         mainMenuViewModel.setMenuItems(DemoServerApi.ITEMS);
         setHasOptionsMenu(true);
@@ -86,7 +91,6 @@ public class MainMenuFragment extends Fragment {
             imageView.setImageResource(MenuItem.backgrounds[menuItem.image]);
             imageIconView.setImageResource(MenuItem.icons[menuItem.icon]);
             textViewName.setText(menuItem.name);
-
             card.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

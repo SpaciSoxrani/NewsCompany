@@ -12,6 +12,8 @@
         tools:layout="@layout/fragment_main_menu">
         <action android:id="@+id/action_navigation_main_menu_to_navigation_profile"
             app:destination="@id/navigation_profile"/>
+        <action android:id="@+id/action_navigation_main_menu_to_navigation_pre_sale"
+            app:destination="@id/navigation_pre_sale"/>
     </fragment>
 
     <fragment
@@ -20,9 +22,11 @@
         android:label="@string/title_profile"
         tools:layout="@layout/fragment_profile" />
 
-<!--    <fragment-->
-<!--        android:id="@+id/navigation_profile"-->
-<!--        android:name="com.example.lobsters.ui.profile.ProfileFragment"-->
-<!--        android:label="@string/title_profile"-->
-<!--        tools:layout="@layout/fragment_profile" />-->
+    <fragment
+        android:id="@+id/navigation_pre_sale"
+        android:name="com.example.hostapp.preSale.PreSaleFragment"
+        android:label="@string/title_pre_sale"
+        tools:layout="@layout/pre_sale_fragment">
+    </fragment>
+
 </navigation>
