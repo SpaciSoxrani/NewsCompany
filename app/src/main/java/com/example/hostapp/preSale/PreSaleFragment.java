@@ -1,14 +1,10 @@
 package com.example.hostapp.preSale;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.GridLayout;
 import android.widget.ImageView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
@@ -17,7 +13,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.hostapp.R;
@@ -28,7 +23,6 @@ import com.google.android.material.button.MaterialButton;
 import java.util.List;
 
 public class PreSaleFragment extends Fragment {
-    Fragment mainMenuFragment;
     private PreSaleViewModel preSaleViewModel;
     private Context context;
     Fragment preSaleFragment;
@@ -46,53 +40,43 @@ public class PreSaleFragment extends Fragment {
         View root = inflater.inflate(R.layout.pre_sale_fragment, container, false);
         final TableLayout tableContainer = root.findViewById(R.id.tableContainer);
         MaterialButton newMailingButton = root.findViewById(R.id.newMailing);
-        ImageView refreshView = root.findViewById(R.id.refresh);
+        ImageView refreshButton = root.findViewById(R.id.refresh);
         preSaleFragment = new PreSaleFragment();
         preSaleViewModel = new ViewModelProvider(this).get(PreSaleViewModel.class);
         context = root.getContext();
 
-        newMailingButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                UiUtils.CreateNewMailingDialog("Новая рассылка", context, preSaleFragment);
-            }
+        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+
+        newMailingButton.setOnClickListener(v -> UiUtils.CreateNewMailingDialog("Новая рассылка", context, transaction));
+
+        refreshButton.setOnClickListener(view -> {
+            assert getFragmentManager() != null;
+            preSaleFragment = new PreSaleFragment();
+            transaction.replace(R.id.nav_host_fragment, preSaleFragment);
+            transaction.commit();
         });
 
-        refreshView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                preSaleFragment = new PreSaleFragment();
-                transaction.replace(R.id.nav_host_fragment, preSaleFragment);
-                transaction.commit();
-            }
-        });
-
-        preSaleViewModel.getSelectedEditRow().observe(getViewLifecycleOwner(), new Observer<NewMailing>() {
-            @Override
-            public void onChanged(NewMailing newMailing) {
-                if (newMailing == null)
-                    return;
-                UiUtils.ShowEditMailingDialogue("Редактирование", "Измените данные рассылки", context, newMailing);
-            }
+        preSaleViewModel.getSelectedEditRow().observe(getViewLifecycleOwner(), newMailing -> {
+            if (newMailing == null)
+                return;
+            UiUtils.ShowEditMailingDialogue("Редактирование", "Измените данные рассылки", context, newMailing, transaction);
         });
 
 
-        preSaleViewModel.getNewMailings().observe(getViewLifecycleOwner(), new Observer<List<NewMailing>>() {
-            @Override
-            public void onChanged(List<NewMailing> newMailings) {
-                addTableRow(newMailings, tableContainer);
-            }
+        preSaleViewModel.getNewMailings().observe(getViewLifecycleOwner(), newMailings -> addTableRow(newMailings, tableContainer));
+
+        preSaleViewModel.getDeleteMailing().observe(getViewLifecycleOwner(), newMailing -> {
+            if (newMailing == null)
+                return;
+            UiUtils.ShowDeleteDialog("Удаление рассылки", R.string.dialogue_delete_desc,
+                       context, newMailing, transaction);
         });
 
-        preSaleViewModel.getDeleteMailing().observe(getViewLifecycleOwner(), new Observer<NewMailing>() {
-            @Override
-            public void onChanged(NewMailing newMailing) {
-                if (newMailing == null)
-                    return;
-                UiUtils.ShowDeleteDialog("Удаление рассылки", R.string.dialogue_delete_desc,
-                           context, newMailing);
-            }
+        preSaleViewModel.getSelectedRow().observe(getViewLifecycleOwner(), newMailing -> {
+            if (newMailing == null)
+                return;
+            UiUtils.ShowGoToEditRowDialog("Редактирование рассылки", "Перейти к редактированию контактов выбранной рассылки?",
+                    context, transaction);
         });
 
         preSaleViewModel.setNewMailings(DemoServerApi.NEW_MAILINGS);
@@ -107,11 +91,10 @@ public class PreSaleFragment extends Fragment {
 
         iconHeader.setImageResource(R.drawable.ic_baseline_psychology_24);
         tableContainer.addView(createTableRow("Название", "Статус", "Департамент", iconHeader, iconHeader2));
-        TableRow row = new TableRow(context);
-
 
         for (int i = 0; i < newMailings.size(); i++) {
             final NewMailing newMailing = newMailings.get(i);
+            TableRow row = new TableRow(context);
 
             ImageView icon = new ImageView(context);
             icon.setImageResource(R.drawable.ic_baseline_edit_24);
@@ -121,19 +104,11 @@ public class PreSaleFragment extends Fragment {
 
             row = createTableRow(newMailing.name, newMailing.status, newMailing.depart, icon, iconDelete);
             tableContainer.addView(row);
-            icon.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    preSaleViewModel.setSelectedEditRow(newMailing);
-                }
-            });
+            icon.setOnClickListener(v -> preSaleViewModel.setSelectedEditRow(newMailing));
 
-            iconDelete.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    preSaleViewModel.setDeleteMailing(newMailing);
-                }
-            });
+            iconDelete.setOnClickListener(v -> preSaleViewModel.setDeleteMailing(newMailing));
+
+            row.setOnClickListener(v -> preSaleViewModel.setSelectedRow(newMailing));
         }
     }
 

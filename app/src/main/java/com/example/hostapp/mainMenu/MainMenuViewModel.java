@@ -8,12 +8,12 @@ import java.util.List;
 
 public class MainMenuViewModel extends ViewModel {
 
-    private MutableLiveData<List<MenuItem>> menuItems;
-    private MutableLiveData<MenuItem> selectedMenuItem;
+    private final MutableLiveData<List<MenuItem>> menuItems;
+    private final MutableLiveData<MenuItem> selectedMenuItem;
 
     public MainMenuViewModel() {
         menuItems = new MutableLiveData<>();
-        menuItems.setValue(new ArrayList<MenuItem>());
+        menuItems.setValue(new ArrayList<>());
         selectedMenuItem = new MutableLiveData<>();
         selectedMenuItem.setValue(null);
     }

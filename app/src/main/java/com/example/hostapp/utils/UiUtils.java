@@ -1,32 +1,25 @@
 package com.example.hostapp.utils;
 
-import android.app.FragmentTransaction;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.TableRow;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.lifecycle.ViewModelProvider;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.example.hostapp.R;
-import com.example.hostapp.mainMenu.MainActivity;
 import com.example.hostapp.preSale.NewMailing;
 import com.example.hostapp.preSale.PreSaleFragment;
-import com.example.hostapp.preSale.PreSaleViewModel;
+import com.example.hostapp.profile.ProfileFragment;
 import com.example.hostapp.serverapi.DemoServerApi;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.textfield.TextInputEditText;
 
 public class UiUtils extends AppCompatActivity {
-
-    FragmentTransaction fTrans;
 
     public static void ShowSimpleDialog(String title, String description, Context context){
         AlertDialog dialog = new MaterialAlertDialogBuilder(context)
@@ -36,10 +29,8 @@ public class UiUtils extends AppCompatActivity {
         dialog.show();
     }
 
-    public static void CreateNewMailingDialog(String title, Context context, Fragment fragment){
+    public static void CreateNewMailingDialog(String title, Context context, FragmentTransaction transaction){
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        Fragment preSaleFrag = new PreSaleFragment();
-
         LinearLayout lila1= new LinearLayout(context);
         lila1.setLayoutParams(new LinearLayout.LayoutParams(80, LinearLayout.LayoutParams.WRAP_CONTENT));
 
@@ -61,19 +52,24 @@ public class UiUtils extends AppCompatActivity {
         builder
                 .setTitle(title)
                 .setView(lila1)
-                .setPositiveButton(R.string.button_ok, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int whichButton) {
-                        String name1 = name.getText().toString();
-                        NewMailing newMailing = new NewMailing(3, name.getText().toString(), status.getText().toString(), depart.getText().toString());
-                        DemoServerApi.NEW_MAILINGS.add(newMailing);
+                .setPositiveButton(R.string.button_ok, (dialog, whichButton) -> {
+                    if(!name.getText().toString().equals("") && !status.getText().toString().equals("") && !depart.getText().toString().equals("")){
+                    NewMailing newMailing = new NewMailing(3, name.getText().toString(), status.getText().toString(), depart.getText().toString());
 
-
-                    }  });
+                    DemoServerApi.NEW_MAILINGS.add(newMailing);
+                        Fragment preSaleFragment = new PreSaleFragment();
+                        transaction.replace(R.id.nav_host_fragment, preSaleFragment);
+                        transaction.commit();
+                    }
+                    else{
+                        dialog.cancel();
+                    }
+                });
         builder.show();
 
     }
 
-    public static void ShowEditMailingDialogue(String title, String description, Context context, NewMailing mailing){
+    public static void ShowEditMailingDialogue(String title, String description, Context context, NewMailing mailing, FragmentTransaction transaction){
         LinearLayout lila1= new LinearLayout(context);
         lila1.setLayoutParams(new LinearLayout.LayoutParams(80, LinearLayout.LayoutParams.WRAP_CONTENT));
         lila1.setOrientation(LinearLayout.VERTICAL);
@@ -95,23 +91,21 @@ public class UiUtils extends AppCompatActivity {
                 .setTitle(title)
                 .setView(lila1)
                 .setMessage(description)
-                .setPositiveButton(R.string.button_edit, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int whichButton) {
-                        DemoServerApi.NEW_MAILINGS.remove(mailing);
-                        String name1 = name.getText().toString();
-                        NewMailing newMailing = new NewMailing(3, name.getText().toString(), status.getText().toString(), depart.getText().toString());
-                        DemoServerApi.NEW_MAILINGS.add(newMailing);
-                    }  })
-                .setNegativeButton(R.string.button_close, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        dialogInterface.cancel();
-                    }
-                });
+                .setPositiveButton(R.string.button_edit, (dialog1, whichButton) -> {
+                    DemoServerApi.NEW_MAILINGS.remove(mailing);
+                    String name1 = name.getText().toString();
+                    NewMailing newMailing = new NewMailing(3, name.getText().toString(), status.getText().toString(), depart.getText().toString());
+                    DemoServerApi.NEW_MAILINGS.add(newMailing);
+                    Fragment preSaleFragment = new PreSaleFragment();
+                    transaction.replace(R.id.nav_host_fragment, preSaleFragment);
+                    transaction.commit();
+                })
+                .setNegativeButton(R.string.button_close, (dialogInterface, i) -> dialogInterface.cancel());
 
         dialog.show();
     }
 
-    public static void ShowDeleteDialog(String title, int description, Context context, NewMailing mailing){
+    public static void ShowDeleteDialog(String title, int description, Context context, NewMailing mailing, FragmentTransaction transaction){
         LinearLayout lila1= new LinearLayout(context);
         lila1.setLayoutParams(new LinearLayout.LayoutParams(80, LinearLayout.LayoutParams.WRAP_CONTENT));
         lila1.setOrientation(LinearLayout.VERTICAL);
@@ -124,19 +118,34 @@ public class UiUtils extends AppCompatActivity {
                 .setTitle(title)
                 .setMessage(description)
                 .setView(img)
-                .setPositiveButton(R.string.button_ok, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        DemoServerApi.NEW_MAILINGS.remove(mailing);
-                        dialogInterface.cancel();
-                    }
+                .setPositiveButton(R.string.button_ok, (dialogInterface, i) -> {
+                    DemoServerApi.NEW_MAILINGS.remove(mailing);
+
+                    Fragment preSaleFragment = new PreSaleFragment();
+                    transaction.replace(R.id.nav_host_fragment, preSaleFragment);
+                    transaction.commit();
+
+                    dialogInterface.cancel();
+
                 })
-                .setNegativeButton(R.string.button_close, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        dialogInterface.cancel();
-                    }
-                });
+                .setNegativeButton(R.string.button_close, (dialogInterface, i) -> dialogInterface.cancel());
+        dialog.show();
+    }
+
+    public static void ShowGoToEditRowDialog(String title, String description, Context context, FragmentTransaction transaction){
+        AlertDialog.Builder dialog = new MaterialAlertDialogBuilder(context)
+                .setTitle(title)
+                .setMessage(description)
+                .setPositiveButton(R.string.button_ok, (dialogInterface, i) -> {
+                    dialogInterface.cancel();
+                    ProfileFragment prof = new ProfileFragment();
+
+//                    FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                    Fragment proF = new ProfileFragment();
+                    transaction.replace(R.id.nav_host_fragment, proF);
+                    transaction.commit();
+                })
+                .setNegativeButton(R.string.button_close, (dialogInterface, i) -> dialogInterface.cancel());
         dialog.show();
     }
 
