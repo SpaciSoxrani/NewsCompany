@@ -5,6 +5,7 @@
     <string name="sign_in">LOGIN</string>
     <string name="sign_up">Создать аккаунт?</string>
     <string name="button_ok">ОК</string>
+    <string name="button_yes">Да</string>
 
     <string name="sign_in_text">Sign In</string>
     <string name="sign_in_small_text">Sign in now to access your CRM account.</string>
@@ -34,6 +35,9 @@
 
     <string name="button_edit">Изменить</string>
     <string name="button_close">Отмена</string>
+    <string name="button_delete">Удалить рассылку</string>
+
+    <string name="dialogue_delete_desc">Вы уверены, что хотите удалить данную рассылку?</string>
 
 
 </resources>

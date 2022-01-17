@@ -4,6 +4,8 @@ import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TableRow;
 
@@ -101,6 +103,36 @@ public class UiUtils extends AppCompatActivity {
                         DemoServerApi.NEW_MAILINGS.add(newMailing);
                     }  })
                 .setNegativeButton(R.string.button_close, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.cancel();
+                    }
+                });
+
+        dialog.show();
+    }
+
+    public static void ShowDeleteDialog(String title, int description, Context context, NewMailing mailing){
+        LinearLayout lila1= new LinearLayout(context);
+        lila1.setLayoutParams(new LinearLayout.LayoutParams(80, LinearLayout.LayoutParams.WRAP_CONTENT));
+        lila1.setOrientation(LinearLayout.VERTICAL);
+
+        ImageView img = new ImageView(context);
+        img.setImageResource(R.drawable.ic_twotone_warning_24);
+        img.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+
+        AlertDialog.Builder dialog = new MaterialAlertDialogBuilder(context)
+                .setTitle(title)
+                .setMessage(description)
+                .setView(img)
+                .setPositiveButton(R.string.button_ok, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        DemoServerApi.NEW_MAILINGS.remove(mailing);
+                        dialogInterface.cancel();
+                    }
+                })
+                .setNegativeButton(R.string.button_close, new DialogInterface.OnClickListener() {
+                    @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         dialogInterface.cancel();
                     }

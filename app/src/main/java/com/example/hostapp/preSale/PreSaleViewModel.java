@@ -9,6 +9,7 @@ import java.util.List;
 public class PreSaleViewModel extends ViewModel {
     private MutableLiveData<List<NewMailing>> newMailings;
     private MutableLiveData<NewMailing> selectedEditRow;
+    private MutableLiveData<NewMailing> deleteMailing;
 
     public PreSaleViewModel() {
         newMailings = new MutableLiveData<>();
@@ -16,6 +17,9 @@ public class PreSaleViewModel extends ViewModel {
 
         selectedEditRow = new MutableLiveData<>();
         selectedEditRow.setValue(null);
+
+        deleteMailing = new MutableLiveData<>();
+        deleteMailing.setValue(null);
     }
 
     public MutableLiveData<List<NewMailing>> getNewMailings() {
@@ -34,4 +38,11 @@ public class PreSaleViewModel extends ViewModel {
         this.selectedEditRow.setValue(newMailing);
     }
 
+    public MutableLiveData<NewMailing> getDeleteMailing() {
+        return deleteMailing;
+    }
+
+    public void setDeleteMailing(NewMailing deleteMailing) {
+        this.deleteMailing.setValue(deleteMailing);
+    }
 }

@@ -85,6 +85,16 @@ public class PreSaleFragment extends Fragment {
             }
         });
 
+        preSaleViewModel.getDeleteMailing().observe(getViewLifecycleOwner(), new Observer<NewMailing>() {
+            @Override
+            public void onChanged(NewMailing newMailing) {
+                if (newMailing == null)
+                    return;
+                UiUtils.ShowDeleteDialog("Удаление рассылки", R.string.dialogue_delete_desc,
+                           context, newMailing);
+            }
+        });
+
         preSaleViewModel.setNewMailings(DemoServerApi.NEW_MAILINGS);
         return root;
     }
@@ -93,16 +103,23 @@ public class PreSaleFragment extends Fragment {
         tableContainer.removeAllViews();
 
         ImageView iconHeader = new ImageView(context);
+        ImageView iconHeader2 = new ImageView(context);
+
         iconHeader.setImageResource(R.drawable.ic_baseline_psychology_24);
-        tableContainer.addView(createTableRow("Название", "Статус", "Департамент", iconHeader));
+        tableContainer.addView(createTableRow("Название", "Статус", "Департамент", iconHeader, iconHeader2));
         TableRow row = new TableRow(context);
 
 
         for (int i = 0; i < newMailings.size(); i++) {
             final NewMailing newMailing = newMailings.get(i);
+
             ImageView icon = new ImageView(context);
             icon.setImageResource(R.drawable.ic_baseline_edit_24);
-            row = createTableRow(newMailing.name, newMailing.status, newMailing.depart, icon);
+
+            ImageView iconDelete = new ImageView(context);
+            iconDelete.setImageResource(R.drawable.ic_baseline_delete_24);
+
+            row = createTableRow(newMailing.name, newMailing.status, newMailing.depart, icon, iconDelete);
             tableContainer.addView(row);
             icon.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -110,31 +127,39 @@ public class PreSaleFragment extends Fragment {
                     preSaleViewModel.setSelectedEditRow(newMailing);
                 }
             });
+
+            iconDelete.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    preSaleViewModel.setDeleteMailing(newMailing);
+                }
+            });
         }
     }
 
-    private TableRow createTableRow(String name, String status, String depart, ImageView icon){
+    private TableRow createTableRow(String name, String status, String depart, ImageView icon, ImageView iconDelete){
         TableRow tr1 = new TableRow(context);
         TextView twName = new TextView(context);
         TextView twStatus = new TextView(context);
         TextView twDepart = new TextView(context);
-//        ImageView icon = new ImageView(context);
 
         twName.setText(name);
-        twName.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.WRAP_CONTENT, 0.25f));
+        twName.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.WRAP_CONTENT, 0.20f));
         tr1.addView(twName);
 
         twStatus.setText(status);
-        twStatus.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.WRAP_CONTENT, 0.25f));
+        twStatus.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.WRAP_CONTENT, 0.20f));
         tr1.addView(twStatus);
 
         twDepart.setText(depart);
-        twDepart.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.WRAP_CONTENT, 0.25f));
+        twDepart.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.WRAP_CONTENT, 0.20f));
         tr1.addView(twDepart);
 
-//        icon.setImageResource(icon1);
-        icon.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.WRAP_CONTENT, 0.25f));
+        icon.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.WRAP_CONTENT, 0.20f));
         tr1.addView(icon);
+
+        iconDelete.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.WRAP_CONTENT, 0.20f));
+        tr1.addView(iconDelete);
 
         return  tr1;
     }
