@@ -1,6 +1,7 @@
 package com.example.hostapp.preSale;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -14,19 +15,12 @@ import android.widget.TableRow;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.widget.AppCompatImageView;
-import androidx.appcompat.widget.AppCompatTextView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.example.hostapp.BackPressedForFragments;
 import com.example.hostapp.R;
-import com.example.hostapp.mainMenu.MainActivity;
-import com.example.hostapp.mainMenu.MainMenuFragment;
-import com.example.hostapp.mainMenu.MainMenuViewModel;
-import com.example.hostapp.mainMenu.MenuItem;
 import com.example.hostapp.serverapi.DemoServerApi;
 import com.example.hostapp.utils.UiUtils;
 import com.google.android.material.button.MaterialButton;
@@ -53,17 +47,28 @@ public class PreSaleFragment extends Fragment {
         View root = inflater.inflate(R.layout.pre_sale_fragment, container, false);
         final TableLayout tableContainer = root.findViewById(R.id.tableContainer);
         MaterialButton newMailingButton = root.findViewById(R.id.newMailing);
+        ImageView refreshView = root.findViewById(R.id.refresh);
         preSaleFragment = new PreSaleFragment();
         preSaleViewModel = new ViewModelProvider(this).get(PreSaleViewModel.class);
         context = root.getContext();
-        UiUtils utils = new UiUtils();
 
         newMailingButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                utils.CreateNewMailingDialog("Новая рассылка", context, preSaleFragment);
+                UiUtils.CreateNewMailingDialog("Новая рассылка", context, preSaleFragment);
             }
         });
+
+        refreshView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                preSaleFragment = new PreSaleFragment();
+                transaction.replace(R.id.nav_host_fragment, preSaleFragment);
+                transaction.commit();
+            }
+        });
+
 
         preSaleViewModel.getNewMailings().observe(getViewLifecycleOwner(), new Observer<List<NewMailing>>() {
             @Override

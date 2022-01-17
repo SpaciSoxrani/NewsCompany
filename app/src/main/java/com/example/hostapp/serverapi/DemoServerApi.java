@@ -13,6 +13,7 @@ public class DemoServerApi {
 
     public static final Map<String, String> CORRECT_LOGIN_PAIRS = new HashMap<String, String>() {
         {
+            put("A.Smirnova@hostco.ru", "AShost");
             put("логин", "пароль");
             put("настя", "смирнова");
             put("1", "1");
@@ -42,5 +43,6 @@ public class DemoServerApi {
         add(new NewMailing(1, "Test 2", "Закрыта", "ДВС"));
         add(new NewMailing(3, "Test 3", "Закрыта", "ДВС"));
     }};
+
 
 }

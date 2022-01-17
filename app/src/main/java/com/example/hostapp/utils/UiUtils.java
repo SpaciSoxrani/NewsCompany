@@ -3,6 +3,7 @@ package com.example.hostapp.utils;
 import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.widget.LinearLayout;
 import android.widget.TableRow;
 
@@ -33,7 +34,7 @@ public class UiUtils extends AppCompatActivity {
         dialog.show();
     }
 
-    public void CreateNewMailingDialog(String title, Context context, Fragment fragment){
+    public static void CreateNewMailingDialog(String title, Context context, Fragment fragment){
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         Fragment preSaleFrag = new PreSaleFragment();
 
@@ -64,16 +65,10 @@ public class UiUtils extends AppCompatActivity {
                         NewMailing newMailing = new NewMailing(3, name.getText().toString(), status.getText().toString(), depart.getText().toString());
                         DemoServerApi.NEW_MAILINGS.add(newMailing);
 
+
                     }  });
-        builder.show();;
+        builder.show();
 
-    }
-
-    public void refreshFragmentUI(Fragment fragment) {
-        getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.nav_host_fragment, fragment)
-                .commit();
     }
 
 }

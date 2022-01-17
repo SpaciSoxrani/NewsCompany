@@ -11,11 +11,14 @@ import java.util.List;
 
 public class PreSaleViewModel extends ViewModel {
     private MutableLiveData<List<NewMailing>> newMailings;
-    //private MutableLiveData<MenuItem> selectedMenuItem;
+    private MutableLiveData<NewMailing> addedNewRow;
 
     public PreSaleViewModel() {
         newMailings = new MutableLiveData<>();
         newMailings.setValue(new ArrayList<NewMailing>());
+
+        addedNewRow = new MutableLiveData<>();
+        addedNewRow.setValue(null);
     }
 
     public MutableLiveData<List<NewMailing>> getNewMailings() {
@@ -26,12 +29,12 @@ public class PreSaleViewModel extends ViewModel {
         this.newMailings.setValue(newMailings);
     }
 
-    public MutableLiveData<List<NewMailing>> getUpdateNewMailings() {
-        return newMailings;
+    public MutableLiveData<NewMailing> getNewRow() {
+        return addedNewRow;
     }
 
-    public void setUpdateNewMailings(List<NewMailing> newMailings) {
-        this.newMailings.setValue(newMailings);
+    public void setNewRow(NewMailing newMailing) {
+        this.addedNewRow.setValue(newMailing);
     }
 
 }
