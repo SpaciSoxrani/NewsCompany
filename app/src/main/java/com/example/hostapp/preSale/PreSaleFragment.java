@@ -32,7 +32,6 @@ public class PreSaleFragment extends Fragment {
     private PreSaleViewModel preSaleViewModel;
     private Context context;
     Fragment preSaleFragment;
-
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
     }
@@ -69,6 +68,15 @@ public class PreSaleFragment extends Fragment {
             }
         });
 
+        preSaleViewModel.getSelectedEditRow().observe(getViewLifecycleOwner(), new Observer<NewMailing>() {
+            @Override
+            public void onChanged(NewMailing newMailing) {
+                if (newMailing == null)
+                    return;
+                UiUtils.ShowEditMailingDialogue("Редактирование", "Измените данные рассылки", context, newMailing);
+            }
+        });
+
 
         preSaleViewModel.getNewMailings().observe(getViewLifecycleOwner(), new Observer<List<NewMailing>>() {
             @Override
@@ -84,22 +92,33 @@ public class PreSaleFragment extends Fragment {
     private void addTableRow(List<NewMailing> newMailings, TableLayout tableContainer) {
         tableContainer.removeAllViews();
 
-        tableContainer.addView(createTableRow("Название", "Статус", "Департамент", R.drawable.ic_baseline_psychology_24));
+        ImageView iconHeader = new ImageView(context);
+        iconHeader.setImageResource(R.drawable.ic_baseline_psychology_24);
+        tableContainer.addView(createTableRow("Название", "Статус", "Департамент", iconHeader));
         TableRow row = new TableRow(context);
+
 
         for (int i = 0; i < newMailings.size(); i++) {
             final NewMailing newMailing = newMailings.get(i);
-            row = createTableRow(newMailing.name, newMailing.status, newMailing.depart, R.drawable.ic_baseline_edit_24);
+            ImageView icon = new ImageView(context);
+            icon.setImageResource(R.drawable.ic_baseline_edit_24);
+            row = createTableRow(newMailing.name, newMailing.status, newMailing.depart, icon);
             tableContainer.addView(row);
+            icon.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    preSaleViewModel.setSelectedEditRow(newMailing);
+                }
+            });
         }
     }
 
-    private TableRow createTableRow(String name, String status, String depart, int icon1){
+    private TableRow createTableRow(String name, String status, String depart, ImageView icon){
         TableRow tr1 = new TableRow(context);
         TextView twName = new TextView(context);
         TextView twStatus = new TextView(context);
         TextView twDepart = new TextView(context);
-        ImageView icon = new ImageView(context);
+//        ImageView icon = new ImageView(context);
 
         twName.setText(name);
         twName.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.WRAP_CONTENT, 0.25f));
@@ -113,16 +132,10 @@ public class PreSaleFragment extends Fragment {
         twDepart.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.WRAP_CONTENT, 0.25f));
         tr1.addView(twDepart);
 
-        icon.setImageResource(icon1);
+//        icon.setImageResource(icon1);
         icon.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.WRAP_CONTENT, 0.25f));
         tr1.addView(icon);
 
-        icon.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-               //new dialogue
-            }
-        });
         return  tr1;
     }
 

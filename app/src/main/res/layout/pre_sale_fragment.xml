@@ -61,7 +61,8 @@
                 <TextView
                     android:text="@string/table_header_depart"
                     android:padding="5dp" />
-                <TextView
+                <ImageView
+                    android:id="@+id/icon"
                     android:text="@string/title_logo"
                     android:padding="5dp" />
             </TableRow>

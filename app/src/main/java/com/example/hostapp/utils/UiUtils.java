@@ -71,4 +71,41 @@ public class UiUtils extends AppCompatActivity {
 
     }
 
+    public static void ShowEditMailingDialogue(String title, String description, Context context, NewMailing mailing){
+        LinearLayout lila1= new LinearLayout(context);
+        lila1.setLayoutParams(new LinearLayout.LayoutParams(80, LinearLayout.LayoutParams.WRAP_CONTENT));
+        lila1.setOrientation(LinearLayout.VERTICAL);
+
+        TextInputEditText name = new TextInputEditText(context);
+        name.setText(mailing.name);
+
+        TextInputEditText status = new TextInputEditText(context);
+        status.setText(mailing.status);
+
+        TextInputEditText depart = new TextInputEditText(context);
+        depart.setText(mailing.depart);
+
+        lila1.addView(name);
+        lila1.addView(status);
+        lila1.addView(depart);
+
+        AlertDialog.Builder dialog = new MaterialAlertDialogBuilder(context)
+                .setTitle(title)
+                .setView(lila1)
+                .setMessage(description)
+                .setPositiveButton(R.string.button_edit, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        DemoServerApi.NEW_MAILINGS.remove(mailing);
+                        String name1 = name.getText().toString();
+                        NewMailing newMailing = new NewMailing(3, name.getText().toString(), status.getText().toString(), depart.getText().toString());
+                        DemoServerApi.NEW_MAILINGS.add(newMailing);
+                    }  })
+                .setNegativeButton(R.string.button_close, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.cancel();
+                    }
+                });
+        dialog.show();
+    }
+
 }
