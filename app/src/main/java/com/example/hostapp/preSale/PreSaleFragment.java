@@ -16,6 +16,7 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.hostapp.R;
+import com.example.hostapp.mainMenu.MainActivity;
 import com.example.hostapp.serverapi.DemoServerApi;
 import com.example.hostapp.utils.UiUtils;
 import com.google.android.material.button.MaterialButton;
@@ -80,6 +81,7 @@ public class PreSaleFragment extends Fragment {
         });
 
         preSaleViewModel.setNewMailings(DemoServerApi.NEW_MAILINGS);
+
         return root;
     }
 
@@ -138,5 +140,6 @@ public class PreSaleFragment extends Fragment {
 
         return  tr1;
     }
+
 
 }

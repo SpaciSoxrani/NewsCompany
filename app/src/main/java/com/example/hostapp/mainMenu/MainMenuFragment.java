@@ -27,6 +27,7 @@ public class MainMenuFragment extends Fragment {
     private View card;
     private Context context;
     Fragment preSaleFragment;
+    Fragment mainMenuFragment;
 
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -62,6 +63,7 @@ public class MainMenuFragment extends Fragment {
                     FragmentTransaction transaction = getFragmentManager().beginTransaction();
                     preSaleFragment = new PreSaleFragment();
                     transaction.replace(R.id.nav_host_fragment, preSaleFragment);
+                    transaction.addToBackStack(null);
                     transaction.commit();
                 }
             }
@@ -69,7 +71,6 @@ public class MainMenuFragment extends Fragment {
 
         mainMenuViewModel.setMenuItems(DemoServerApi.ITEMS);
         setHasOptionsMenu(true);
-
         return root;
     }
 

@@ -13,6 +13,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.example.hostapp.R;
 import com.example.hostapp.preSale.NewMailing;
+import com.example.hostapp.preSale.PreSaleDetailsFragment;
 import com.example.hostapp.preSale.PreSaleFragment;
 import com.example.hostapp.profile.ProfileFragment;
 import com.example.hostapp.serverapi.DemoServerApi;
@@ -54,11 +55,12 @@ public class UiUtils extends AppCompatActivity {
                 .setView(lila1)
                 .setPositiveButton(R.string.button_ok, (dialog, whichButton) -> {
                     if(!name.getText().toString().equals("") && !status.getText().toString().equals("") && !depart.getText().toString().equals("")){
-                    NewMailing newMailing = new NewMailing(3, name.getText().toString(), status.getText().toString(), depart.getText().toString());
+                    NewMailing newMailing = new NewMailing(3, name.getText().toString(), status.getText().toString(), depart.getText().toString(), null);
 
                     DemoServerApi.NEW_MAILINGS.add(newMailing);
                         Fragment preSaleFragment = new PreSaleFragment();
                         transaction.replace(R.id.nav_host_fragment, preSaleFragment);
+                        transaction.addToBackStack(null);
                         transaction.commit();
                     }
                     else{
@@ -94,10 +96,11 @@ public class UiUtils extends AppCompatActivity {
                 .setPositiveButton(R.string.button_edit, (dialog1, whichButton) -> {
                     DemoServerApi.NEW_MAILINGS.remove(mailing);
                     String name1 = name.getText().toString();
-                    NewMailing newMailing = new NewMailing(3, name.getText().toString(), status.getText().toString(), depart.getText().toString());
+                    NewMailing newMailing = new NewMailing(3, name.getText().toString(), status.getText().toString(), depart.getText().toString(), null);
                     DemoServerApi.NEW_MAILINGS.add(newMailing);
                     Fragment preSaleFragment = new PreSaleFragment();
                     transaction.replace(R.id.nav_host_fragment, preSaleFragment);
+                    transaction.addToBackStack(null);
                     transaction.commit();
                 })
                 .setNegativeButton(R.string.button_close, (dialogInterface, i) -> dialogInterface.cancel());
@@ -123,6 +126,7 @@ public class UiUtils extends AppCompatActivity {
 
                     Fragment preSaleFragment = new PreSaleFragment();
                     transaction.replace(R.id.nav_host_fragment, preSaleFragment);
+                    transaction.addToBackStack(null);
                     transaction.commit();
 
                     dialogInterface.cancel();
@@ -141,12 +145,12 @@ public class UiUtils extends AppCompatActivity {
                     ProfileFragment prof = new ProfileFragment();
 
 //                    FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                    Fragment proF = new ProfileFragment();
+                    Fragment proF = new PreSaleDetailsFragment();
                     transaction.replace(R.id.nav_host_fragment, proF);
+                    transaction.addToBackStack(null);
                     transaction.commit();
                 })
                 .setNegativeButton(R.string.button_close, (dialogInterface, i) -> dialogInterface.cancel());
         dialog.show();
     }
-
 }
