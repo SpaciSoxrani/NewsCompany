@@ -20,6 +20,8 @@ import com.example.hostapp.R;
 import com.example.hostapp.mainMenu.MainMenuViewModel;
 import com.example.hostapp.mainMenu.MenuItem;
 import com.example.hostapp.serverapi.DemoServerApi;
+import com.example.hostapp.utils.UiUtils;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.List;
 
@@ -39,8 +41,17 @@ public class PreSaleDetailsFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_pre_sale_details, container, false);
         context = root.getContext();
 
-        //final LinearLayoutCompat cardsContainer = root.findViewById(R.id.card_container);
         final LinearLayout cardsContainer = root.findViewById(R.id.layout_container);
+        final FloatingActionButton floatingActionButton = root.findViewById(R.id.floating_action_button);
+        floatingActionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                UiUtils.AddNewPreSaleEntryDialog("Добавление контакта", context, transaction);
+
+            }
+        });
+
 
         preSaleDetailsViewModel.getMenuItems().observe(getViewLifecycleOwner(), new Observer<List<PreSaleEntry>>() {
                     @Override
@@ -48,11 +59,6 @@ public class PreSaleDetailsFragment extends Fragment {
                         redrawPreSaleCards(preSaleEntries, cardsContainer);
                     }
                 });
-//            @Override
-//            public void onChanged(List<MenuItem> menuItems) {
-//                redrawPreSaleCards(menuItems, cardsContainer);
-//            }
-//        });
 
                 preSaleDetailsViewModel.getSelectedMenuItem().observe(getViewLifecycleOwner(), new Observer<PreSaleEntry>() {
                             @Override
@@ -60,12 +66,6 @@ public class PreSaleDetailsFragment extends Fragment {
 
                             }
                         });
-//                    @Override
-//                    public void onChanged(MenuItem menuItem) {
-//                        if (menuItem == null)
-//                            return;
-//                    }
-//                });
 
         preSaleDetailsViewModel.setMenuItems(DemoServerApi.PRE_SALE_ENTRIES);
         setHasOptionsMenu(true);

@@ -16,7 +16,6 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.hostapp.R;
-import com.example.hostapp.mainMenu.MainActivity;
 import com.example.hostapp.serverapi.DemoServerApi;
 import com.example.hostapp.utils.UiUtils;
 import com.google.android.material.button.MaterialButton;
@@ -38,7 +37,7 @@ public class PreSaleFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.pre_sale_fragment, container, false);
+        View root = inflater.inflate(R.layout.fragment_pre_sale, container, false);
         final TableLayout tableContainer = root.findViewById(R.id.tableContainer);
         MaterialButton newMailingButton = root.findViewById(R.id.newMailing);
         ImageView refreshButton = root.findViewById(R.id.refresh);

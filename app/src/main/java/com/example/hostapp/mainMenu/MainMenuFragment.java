@@ -2,10 +2,12 @@ package com.example.hostapp.mainMenu;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridLayout;
+import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
 import com.example.hostapp.R;
@@ -24,7 +26,6 @@ import java.util.List;
 
 public class MainMenuFragment extends Fragment {
     private MainMenuViewModel mainMenuViewModel;
-    private View card;
     private Context context;
     Fragment preSaleFragment;
     Fragment mainMenuFragment;
@@ -84,7 +85,7 @@ public class MainMenuFragment extends Fragment {
         for (int i = 0; i < menuItems.size(); i++) {
             final MenuItem menuItem = menuItems.get(i);
 
-            card = LayoutInflater.from(getContext()).inflate(R.layout.card_menu_item, container, false);
+            View card = LayoutInflater.from(getContext()).inflate(R.layout.card_menu_item, container, false);
 
             AppCompatImageView imageView = card.findViewById(R.id.location_bg);
             AppCompatImageView imageIconView = card.findViewById(R.id.icon_description);

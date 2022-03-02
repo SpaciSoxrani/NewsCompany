@@ -48,8 +48,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginRight="@dimen/card_horizontal_margin"
                 android:layout_marginLeft="@dimen/card_horizontal_margin"
-                android:layout_marginTop="2dp"
-                android:gravity="center_horizontal" />
+                android:layout_marginTop="2dp" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/time_zone"
@@ -57,8 +56,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginRight="@dimen/card_horizontal_margin"
                 android:layout_marginLeft="@dimen/card_horizontal_margin"
-                android:layout_marginTop="2dp"
-                android:gravity="center_horizontal" />
+                android:layout_marginTop="2dp"/>
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/organization"
@@ -66,8 +64,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginRight="@dimen/card_horizontal_margin"
                 android:layout_marginLeft="@dimen/card_horizontal_margin"
-                android:layout_marginTop="2dp"
-                android:gravity="center_horizontal" />
+                android:layout_marginTop="2dp" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/full_name"
@@ -75,8 +72,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginRight="@dimen/card_horizontal_margin"
                 android:layout_marginLeft="@dimen/card_horizontal_margin"
-                android:layout_marginTop="2dp"
-                android:gravity="center_horizontal" />
+                android:layout_marginTop="2dp"/>
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/position"
@@ -84,8 +80,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginRight="@dimen/card_horizontal_margin"
                 android:layout_marginLeft="@dimen/card_horizontal_margin"
-                android:layout_marginTop="2dp"
-                android:gravity="center_horizontal" />
+                android:layout_marginTop="2dp" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/phone"
@@ -93,8 +88,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginRight="@dimen/card_horizontal_margin"
                 android:layout_marginLeft="@dimen/card_horizontal_margin"
-                android:layout_marginTop="2dp"
-                android:gravity="center_horizontal" />
+                android:layout_marginTop="2dp" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/mail"
@@ -102,8 +96,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginRight="@dimen/card_horizontal_margin"
                 android:layout_marginLeft="@dimen/card_horizontal_margin"
-                android:layout_marginTop="2dp"
-                android:gravity="center_horizontal" />
+                android:layout_marginTop="2dp"/>
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/site"
@@ -111,8 +104,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginRight="@dimen/card_horizontal_margin"
                 android:layout_marginLeft="@dimen/card_horizontal_margin"
-                android:layout_marginTop="2dp"
-                android:gravity="center_horizontal" />
+                android:layout_marginTop="2dp" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/requestSend"
@@ -120,8 +112,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginRight="@dimen/card_horizontal_margin"
                 android:layout_marginLeft="@dimen/card_horizontal_margin"
-                android:layout_marginTop="2dp"
-                android:gravity="center_horizontal" />
+                android:layout_marginTop="2dp" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/number"
@@ -129,8 +120,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginRight="@dimen/card_horizontal_margin"
                 android:layout_marginLeft="@dimen/card_horizontal_margin"
-                android:layout_marginTop="2dp"
-                android:gravity="center_horizontal" />
+                android:layout_marginTop="2dp" />
         </LinearLayout>
     </FrameLayout>
 </androidx.cardview.widget.CardView>

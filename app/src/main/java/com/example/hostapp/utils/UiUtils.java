@@ -2,11 +2,14 @@ package com.example.hostapp.utils;
 
 import android.content.Context;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatTextView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -14,6 +17,7 @@ import androidx.fragment.app.FragmentTransaction;
 import com.example.hostapp.R;
 import com.example.hostapp.preSale.NewMailing;
 import com.example.hostapp.preSale.PreSaleDetailsFragment;
+import com.example.hostapp.preSale.PreSaleEntry;
 import com.example.hostapp.preSale.PreSaleFragment;
 import com.example.hostapp.profile.ProfileFragment;
 import com.example.hostapp.serverapi.DemoServerApi;
@@ -34,7 +38,6 @@ public class UiUtils extends AppCompatActivity {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         LinearLayout lila1= new LinearLayout(context);
         lila1.setLayoutParams(new LinearLayout.LayoutParams(80, LinearLayout.LayoutParams.WRAP_CONTENT));
-
         lila1.setOrientation(LinearLayout.VERTICAL);
 
         TextInputEditText name = new TextInputEditText(context);
@@ -145,6 +148,67 @@ public class UiUtils extends AppCompatActivity {
                     ProfileFragment prof = new ProfileFragment();
 
 //                    FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                    Fragment proF = new PreSaleDetailsFragment();
+                    transaction.replace(R.id.nav_host_fragment, proF);
+                    transaction.addToBackStack(null);
+                    transaction.commit();
+                })
+                .setNegativeButton(R.string.button_close, (dialogInterface, i) -> dialogInterface.cancel());
+        dialog.show();
+    }
+
+    public static void AddNewPreSaleEntryDialog(String title, Context context, FragmentTransaction transaction){
+        LinearLayout lila1= new LinearLayout(context);
+        lila1.setLayoutParams(new LinearLayout.LayoutParams(80, LinearLayout.LayoutParams.WRAP_CONTENT));
+        lila1.setPadding(10, 10,10,10);
+        lila1.setOrientation(LinearLayout.VERTICAL);
+
+        TextInputEditText districtView = new TextInputEditText(context);
+        TextInputEditText timeZoneView = new TextInputEditText(context);
+        TextInputEditText organizationView = new TextInputEditText(context);
+        TextInputEditText nameView = new TextInputEditText(context);
+        TextInputEditText positionView = new TextInputEditText(context);
+        TextInputEditText phoneView = new TextInputEditText(context);
+        TextInputEditText emailView = new TextInputEditText(context);
+        TextInputEditText siteView = new TextInputEditText(context);
+        TextInputEditText requestView = new TextInputEditText(context);
+        TextInputEditText numberView = new TextInputEditText(context);
+
+        districtView.setHint("Регион");
+        timeZoneView.setHint("Часовой пояс");
+        organizationView.setHint("Организация");
+        nameView.setHint("ФИО");
+        positionView.setHint("Должность");
+        phoneView.setHint("Телефон");
+        emailView.setHint("E-mail");
+        siteView.setHint("Сайт");
+        requestView.setHint("Запрос отправлен");
+        numberView.setHint("Номер входящего");
+
+        lila1.addView(districtView);
+        lila1.addView(timeZoneView);
+        lila1.addView(organizationView);
+        lila1.addView(nameView);
+        lila1.addView(positionView);
+        lila1.addView(phoneView);
+        lila1.addView(emailView);
+        lila1.addView(siteView);
+        lila1.addView(requestView);
+        lila1.addView(numberView);
+
+
+        AlertDialog.Builder dialog = new MaterialAlertDialogBuilder(context)
+                .setTitle(title)
+                .setView(lila1)
+                .setPositiveButton(R.string.button_ok, (dialogInterface, i) -> {
+                    PreSaleEntry newEntry = new PreSaleEntry(4, districtView.getText().toString(), timeZoneView.getText().toString(),
+                            organizationView.getText().toString(), nameView.getText().toString(), positionView.getText().toString(),
+                            phoneView.getText().toString(), emailView.getText().toString(), siteView.getText().toString(),
+                            requestView.getText().toString(), numberView.getText().toString());
+
+                    DemoServerApi.PRE_SALE_ENTRIES.add(newEntry);
+                    dialogInterface.cancel();
+
                     Fragment proF = new PreSaleDetailsFragment();
                     transaction.replace(R.id.nav_host_fragment, proF);
                     transaction.addToBackStack(null);
