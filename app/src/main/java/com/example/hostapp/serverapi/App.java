@@ -15,7 +15,7 @@ public class App extends Application {
         //Базовая часть адреса
         //Конвертер, необходимый для преобразования JSON'а в объекты
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://localhost:7001") //Базовая часть адреса
+                .baseUrl("https://b556-178-129-105-69.ngrok.io") //Базовая часть адреса
                 .addConverterFactory(GsonConverterFactory.create()) //Конвертер, необходимый для преобразования JSON'а в объекты
                 .build();
 

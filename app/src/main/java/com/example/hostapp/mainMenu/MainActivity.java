@@ -4,22 +4,25 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentContainerView;
 import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
-import androidx.viewpager.widget.ViewPager;
 
 import android.app.FragmentTransaction;
 import android.os.Bundle;
-import android.view.View;
+import android.util.Log;
 
 import com.example.hostapp.R;
-import com.example.hostapp.preSale.PreSaleFragment;
-import com.example.hostapp.profile.ProfileFragment;
+import com.example.hostapp.preSale.NewMailing;
+import com.example.hostapp.serverapi.App;
+import com.example.hostapp.serverapi.DemoServerApi;
+import com.example.hostapp.serverapi.PreSaleEntryModel;
 import com.google.android.material.appbar.MaterialToolbar;
 
-import java.util.ArrayList;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity{
 
@@ -29,6 +32,9 @@ public class MainActivity extends AppCompatActivity{
     FragmentTransaction transaction;
     Fragment mainMenuFragment;
     private FragmentManager manager;
+
+    List<PreSaleEntryModel> preSaleList;
+    private static final String TAG = "PreSaleFragment";
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -50,6 +56,26 @@ public class MainActivity extends AppCompatActivity{
             } else {
             }
             return false;
+        });
+
+
+        App.getApi().getData().enqueue(new Callback<List<PreSaleEntryModel>>() {
+            @Override
+            public void onResponse(Call<List<PreSaleEntryModel>> call, Response<List<PreSaleEntryModel>> response) {
+                preSaleList.addAll(response.body());
+                for(int i = 0; i < preSaleList.size(); i++)
+                {
+                    DemoServerApi.NEW_MAILINGS.add(new NewMailing(4, preSaleList.get(i).getName().toString(), preSaleList.get(i).getStatus(),
+                            preSaleList.get(i).getDepartment(), null));
+                }
+                Log.i(TAG, "OK OK OK");
+            }
+
+            @Override
+            public void onFailure(Call<List<PreSaleEntryModel>> call, Throwable t) {
+                Log.i(TAG, "An error occurred during networking!");
+                //Toast.makeText(PreSaleFragment.this, "An error occurred during networking", Toast.LENGTH_SHORT).show();
+            }
         });
     }
 

@@ -2,7 +2,6 @@ package com.example.hostapp.preSale;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,7 +9,6 @@ import android.widget.ImageView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -18,15 +16,9 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.hostapp.R;
-import com.example.hostapp.serverapi.App;
 import com.example.hostapp.serverapi.DemoServerApi;
-import com.example.hostapp.serverapi.PreSaleEntryModel;
 import com.example.hostapp.utils.UiUtils;
 import com.google.android.material.button.MaterialButton;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 import java.util.List;
 
@@ -34,9 +26,6 @@ public class PreSaleFragment extends Fragment {
     private PreSaleViewModel preSaleViewModel;
     private Context context;
     Fragment preSaleFragment;
-    List<PreSaleEntryModel> preSaleList;
-
-    private static final String TAG = "PreSaleFragment";
 
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -47,24 +36,6 @@ public class PreSaleFragment extends Fragment {
 
         super.onCreate(savedInstanceState);
 
-        App.getApi().getData("bash", 50).enqueue(new Callback<List<PreSaleEntryModel>>() {
-            @Override
-            public void onResponse(Call<List<PreSaleEntryModel>> call, Response<List<PreSaleEntryModel>> response) {
-                preSaleList.addAll(response.body());
-                //recyclerView.getAdapter().notifyDataSetChanged();
-                if(preSaleList.size() != 0){
-                    for(int i = 0; i < preSaleList.size(); i ++)
-                    {
-                        Log.i(TAG, preSaleList.get(i).getName());
-                    }
-                }
-            }
-
-            @Override
-            public void onFailure(Call<List<PreSaleEntryModel>> call, Throwable t) {
-                //Toast.makeText(PreSaleFragment.this, "An error occurred during networking", Toast.LENGTH_SHORT).show();
-            }
-        });
     }
 
     public View onCreateView(@NonNull LayoutInflater inflater,

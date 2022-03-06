@@ -2,6 +2,7 @@ package com.example.hostapp.serverapi;
 
 import com.example.hostapp.mainMenu.MenuItem;
 import com.example.hostapp.preSale.NewMailing;
+import com.example.hostapp.serverapi.PreSaleEntryModel;
 import com.example.hostapp.preSale.PreSaleEntry;
 
 import java.util.ArrayList;
@@ -56,4 +57,5 @@ public class DemoServerApi {
                 "Сергеев Григорий Антонович", "Министр", "89956777767", "test3@gmail.com", "http://test3.com",
                 "", ""));
     }};
+    //public static List<PreSaleEntryModel>  PRE_SALE_ENTRY_MODELS = new ArrayList<PreSaleEntryModel>();
 }
