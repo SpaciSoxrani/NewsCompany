@@ -1,9 +1,17 @@
 package com.example.hostapp.utils;
 
 import android.content.Context;
+import android.database.DataSetObserver;
+import android.util.Log;
+import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Adapter;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Spinner;
+import android.widget.SpinnerAdapter;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,9 +24,20 @@ import com.example.hostapp.preSale.PreSaleDetailsFragment;
 import com.example.hostapp.preSale.PreSaleEntry;
 import com.example.hostapp.preSale.PreSaleFragment;
 import com.example.hostapp.profile.ProfileFragment;
+import com.example.hostapp.serverapi.APIModels.PostPreSaleGroup;
+import com.example.hostapp.serverapi.APIModels.PreSaleEntryModel;
+import com.example.hostapp.serverapi.APIModels.PreSaleGroupModel;
+import com.example.hostapp.serverapi.APIModels.PreSaleGroupStatusesModel;
+import com.example.hostapp.serverapi.App;
 import com.example.hostapp.serverapi.DemoServerApi;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.textfield.TextInputEditText;
+
+import java.util.concurrent.atomic.AtomicInteger;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class UiUtils extends AppCompatActivity {
 
@@ -31,6 +50,9 @@ public class UiUtils extends AppCompatActivity {
     }
 
     public static void CreateNewMailingDialog(String title, Context context, FragmentTransaction transaction){
+        final String[] statusGroup = {""};
+        final String[] departGroup = {""};
+
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         LinearLayout lila1= new LinearLayout(context);
         lila1.setLayoutParams(new LinearLayout.LayoutParams(80, LinearLayout.LayoutParams.WRAP_CONTENT));
@@ -39,44 +61,134 @@ public class UiUtils extends AppCompatActivity {
         TextInputEditText name = new TextInputEditText(context);
         name.setHint(R.string.table_header_name);
 
-        TextInputEditText status = new TextInputEditText(context);
-        status.setHint(R.string.table_header_status);
+        //spinner status list
+        Spinner spinStatus = createSpinnerStatus(context, statusGroup);
 
-        TextInputEditText depart = new TextInputEditText(context);
-        depart.setHint(R.string.table_header_depart);
+        // TODO: fix this govno for spinner department' list
+        Spinner spinDepart = createSpinnerDepartment(context, departGroup);
 
         lila1.addView(name);
-        lila1.addView(status);
-        lila1.addView(depart);
+        lila1.addView(spinStatus);
+        lila1.addView(spinDepart);
 
         builder
                 .setTitle(title)
                 .setView(lila1)
                 .setPositiveButton(R.string.button_ok, (dialog, whichButton) -> {
-                    if(!name.getText().toString().equals("") && !status.getText().toString().equals("") && !depart.getText().toString().equals("")){
-                    NewMailing newMailing = new NewMailing(3, name.getText().toString(), status.getText().toString(), depart.getText().toString(), null);
+                    if(!name.getText().toString().equals("")){
+                        PostPreSaleGroup postPreSaleGroup = new PostPreSaleGroup();
+                        postPreSaleGroup.setName(name.getText().toString());
+                        // TODO: fix logic for finding status id and depart id
+                        for(int i = 0; i < DemoServerApi.MAIN_DEPARTMENTS_MODEL_LIST.size(); i ++){
+                            if(departGroup[0].equals(DemoServerApi.MAIN_DEPARTMENTS_MODEL_LIST.get(i).getName())){
+                                postPreSaleGroup.setDepartmentId(DemoServerApi.MAIN_DEPARTMENTS_MODEL_LIST.get(i).getId());
+                            }
+                        };
 
-                    DemoServerApi.NEW_MAILINGS.add(newMailing);
-                        Fragment preSaleFragment = new PreSaleFragment();
-                        transaction.replace(R.id.nav_host_fragment, preSaleFragment);
-                        transaction.addToBackStack(null);
-                        transaction.commit();
+                        for(int i = 0; i < DemoServerApi.PRE_SALE_GROUP_STATUSES_MODEL_LIST.size(); i ++){
+                            if(statusGroup[0].equals(DemoServerApi.PRE_SALE_GROUP_STATUSES_MODEL_LIST.get(i).getName())){
+                                postPreSaleGroup.setStatusId(DemoServerApi.PRE_SALE_GROUP_STATUSES_MODEL_LIST.get(i).getId());
+                            }
+                        };
+
+                        Call<PostPreSaleGroup> call = App.getApi().createPost(postPreSaleGroup);
+                        call.enqueue(new Callback<PostPreSaleGroup>() {
+                            @Override
+                            public void onResponse(Call<PostPreSaleGroup> call, Response<PostPreSaleGroup> response) {
+                                Log.i("Group id", postPreSaleGroup.getStatusId() + ' ' + postPreSaleGroup.getDepartmentId()  );
+                            }
+
+                            @Override
+                            public void onFailure(Call<PostPreSaleGroup> call, Throwable t) {
+                                Log.i("Enable post group", "NOOOOO");
+                            }
+                        });
                     }
                     else{
                         dialog.cancel();
                     }
                 });
         builder.show();
+    }
 
+    private static String onItemSelectedHandler(AdapterView<?> adapterView, View view, int position, long id) {
+        Adapter adapter = adapterView.getAdapter();
+        String preSaleGroupStatus= (String) adapter.getItem(position);
+        Log.i("Get status", preSaleGroupStatus);
+
+        return preSaleGroupStatus;
+    }
+
+    private static Spinner createSpinnerStatus(Context context, String[] statusGroup){
+        Spinner spinStatus = new Spinner(context);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(context, android.R.layout.simple_list_item_1, new String[]{
+                DemoServerApi.PRE_SALE_GROUP_STATUSES_MODEL_LIST.get(0).getName(),
+                DemoServerApi.PRE_SALE_GROUP_STATUSES_MODEL_LIST.get(1).getName(),
+        });
+
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinStatus.setAdapter(adapter);
+
+        spinStatus.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                Adapter adapter = parent.getAdapter();
+                statusGroup[0] = (String) adapter.getItem(position);
+                Log.i("Get status", statusGroup[0]);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                statusGroup[0] = (String) adapter.getItem(0);
+            }
+        });
+        return spinStatus;
+    }
+
+    private static Spinner createSpinnerDepartment(Context context, String[] departGroup){
+        Spinner spinDepart = new Spinner(context);
+        ArrayAdapter<String> adapterDepart = new ArrayAdapter<String>(context, android.R.layout.simple_list_item_1, new String[]{
+                DemoServerApi.MAIN_DEPARTMENTS_MODEL_LIST.get(0).getName(),
+                DemoServerApi.MAIN_DEPARTMENTS_MODEL_LIST.get(1).getName(),
+                DemoServerApi.MAIN_DEPARTMENTS_MODEL_LIST.get(2).getName(),
+                DemoServerApi.MAIN_DEPARTMENTS_MODEL_LIST.get(3).getName()
+        });
+
+        adapterDepart.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinDepart.setAdapter(adapterDepart);
+
+        spinDepart.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                Adapter adapter = parent.getAdapter();
+                departGroup[0] = (String) adapter.getItem(position);
+                Log.i("Get depart", departGroup[0]);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                Adapter adapter = parent.getAdapter();
+                departGroup[0] = (String) adapter.getItem(0);
+            }
+        });
+        return spinDepart;
     }
 
     public static void ShowEditMailingDialogue(String title, String description, Context context, NewMailing mailing, FragmentTransaction transaction){
+        final String[] statusGroup = {""};
+        final String[] departGroup = {""};
+
         LinearLayout lila1= new LinearLayout(context);
         lila1.setLayoutParams(new LinearLayout.LayoutParams(80, LinearLayout.LayoutParams.WRAP_CONTENT));
         lila1.setOrientation(LinearLayout.VERTICAL);
 
         TextInputEditText name = new TextInputEditText(context);
         name.setText(mailing.name);
+
+        Spinner spinStatus = createSpinnerStatus(context, statusGroup);
+        Spinner spinDepart = createSpinnerDepartment(context, departGroup);
 
         TextInputEditText status = new TextInputEditText(context);
         status.setText(mailing.status);
@@ -85,6 +197,10 @@ public class UiUtils extends AppCompatActivity {
         depart.setText(mailing.depart);
 
         lila1.addView(name);
+        lila1.addView(spinStatus);
+        lila1.addView(spinDepart);
+
+
         lila1.addView(status);
         lila1.addView(depart);
 
@@ -93,9 +209,10 @@ public class UiUtils extends AppCompatActivity {
                 .setView(lila1)
                 .setMessage(description)
                 .setPositiveButton(R.string.button_edit, (dialog1, whichButton) -> {
+
                     DemoServerApi.NEW_MAILINGS.remove(mailing);
                     String name1 = name.getText().toString();
-                    NewMailing newMailing = new NewMailing(3, name.getText().toString(), status.getText().toString(), depart.getText().toString(), null);
+                    NewMailing newMailing = new NewMailing(3, name.getText().toString(), status.getText().toString(), depart.getText().toString(), null, null);
                     DemoServerApi.NEW_MAILINGS.add(newMailing);
                     Fragment preSaleFragment = new PreSaleFragment();
                     transaction.replace(R.id.nav_host_fragment, preSaleFragment);
@@ -121,12 +238,27 @@ public class UiUtils extends AppCompatActivity {
                 .setMessage(description)
                 .setView(img)
                 .setPositiveButton(R.string.button_ok, (dialogInterface, i) -> {
+
+                    Call<PreSaleGroupModel> call = App.getApi().deletePreSaleGroup(mailing.idGroup);
+
+                    call.enqueue(new Callback<PreSaleGroupModel>() {
+                        @Override
+                        public void onResponse(Call<PreSaleGroupModel> call, Response<PreSaleGroupModel> response) {
+                            Log.i("Delete group", "OK OK OK");
+                        }
+
+                        @Override
+                        public void onFailure(Call<PreSaleGroupModel> call, Throwable t) {
+                            Log.i("Delete group", "NOOOOO");
+                        }
+                    });
+
                     DemoServerApi.NEW_MAILINGS.remove(mailing);
 
                     Fragment preSaleFragment = new PreSaleFragment();
-                    transaction.replace(R.id.nav_host_fragment, preSaleFragment);
-                    transaction.addToBackStack(null);
-                    transaction.commit();
+//                    transaction.replace(R.id.nav_host_fragment, preSaleFragment);
+//                    transaction.addToBackStack(null);
+//                    transaction.commit();
 
                     dialogInterface.cancel();
 

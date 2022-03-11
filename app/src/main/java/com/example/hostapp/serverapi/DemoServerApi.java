@@ -2,8 +2,9 @@ package com.example.hostapp.serverapi;
 
 import com.example.hostapp.mainMenu.MenuItem;
 import com.example.hostapp.preSale.NewMailing;
-import com.example.hostapp.serverapi.PreSaleEntryModel;
 import com.example.hostapp.preSale.PreSaleEntry;
+import com.example.hostapp.serverapi.APIModels.MainDepartmentsModel;
+import com.example.hostapp.serverapi.APIModels.PreSaleGroupStatusesModel;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -40,11 +41,9 @@ public class DemoServerApi {
         add(new MenuItem(1, "Лиды", 8, 8));
     }};
 
-    public static final List<NewMailing> NEW_MAILINGS = new ArrayList<NewMailing>(){{
-        add(new NewMailing(0, "Test 1", "В работе", "ДВС", PRE_SALE_ENTRIES));
-        add(new NewMailing(1, "Test 2", "Закрыта", "ДВС", null));
-        add(new NewMailing(3, "Test 3", "Закрыта", "ДВС", null));
-    }};
+    public static final List<NewMailing> NEW_MAILINGS = new ArrayList<NewMailing>();
+    public static final List<MainDepartmentsModel> MAIN_DEPARTMENTS_MODEL_LIST = new ArrayList<MainDepartmentsModel>();
+    public static final List<PreSaleGroupStatusesModel> PRE_SALE_GROUP_STATUSES_MODEL_LIST = new ArrayList<PreSaleGroupStatusesModel>();
 
     public  static  final  List<PreSaleEntry> PRE_SALE_ENTRIES = new ArrayList<PreSaleEntry>(){{
         add(new PreSaleEntry(0, "Свердловская область", "(ЕКБ+0)", "Областной диспансер №2",

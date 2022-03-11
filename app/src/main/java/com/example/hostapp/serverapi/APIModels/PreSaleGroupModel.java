@@ -1,14 +1,9 @@
-package com.example.hostapp.serverapi;
+package com.example.hostapp.serverapi.APIModels;
 
-import com.example.hostapp.R;
-import com.example.hostapp.preSale.PreSaleEntry;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-import java.util.List;
-
-public class PreSaleEntryModel {
-
+public class PreSaleGroupModel {
     @SerializedName("id")
     @Expose
     private String id;
@@ -20,13 +15,22 @@ public class PreSaleEntryModel {
     private String statusId;
     @SerializedName("status")
     @Expose
-    private String status;
+    private StatusModel status;
     @SerializedName("departmentId")
     @Expose
     private String departmentId;
     @SerializedName("department")
     @Expose
-    private String department;
+    private DepartmentModel department;
+    @SerializedName("createdDate")
+    @Expose
+    private String createdDate;
+    @SerializedName("changedDate")
+    @Expose
+    private String changedDate;
+    @SerializedName("isVisible")
+    @Expose
+    private Boolean isVisible;
 
     public String getId() {
         return id;
@@ -52,11 +56,11 @@ public class PreSaleEntryModel {
         this.statusId = statusId;
     }
 
-    public String getStatus() {
+    public StatusModel getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(StatusModel status) {
         this.status = status;
     }
 
@@ -68,11 +72,35 @@ public class PreSaleEntryModel {
         this.departmentId = departmentId;
     }
 
-    public String getDepartment() {
+    public DepartmentModel getDepartment() {
         return department;
     }
 
-    public void setDepartment(String department) {
+    public void setDepartment(DepartmentModel department) {
         this.department = department;
+    }
+
+    public String getCreatedDate() {
+        return createdDate;
+    }
+
+    public void setCreatedDate(String createdDate) {
+        this.createdDate = createdDate;
+    }
+
+    public String getChangedDate() {
+        return changedDate;
+    }
+
+    public void setChangedDate(String changedDate) {
+        this.changedDate = changedDate;
+    }
+
+    public Boolean getIsVisible() {
+        return isVisible;
+    }
+
+    public void setIsVisible(Boolean isVisible) {
+        this.isVisible = isVisible;
     }
 }

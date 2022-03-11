@@ -1,10 +1,13 @@
 package com.example.hostapp.preSale;
 
 import android.content.Context;
+import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
@@ -14,18 +17,29 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
 
 import com.example.hostapp.R;
+import com.example.hostapp.serverapi.App;
 import com.example.hostapp.serverapi.DemoServerApi;
+import com.example.hostapp.serverapi.APIModels.PreSaleEntryModel;
 import com.example.hostapp.utils.UiUtils;
 import com.google.android.material.button.MaterialButton;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class PreSaleFragment extends Fragment {
     private PreSaleViewModel preSaleViewModel;
     private Context context;
     Fragment preSaleFragment;
+
+    List<PreSaleEntryModel> preSaleList;
+    private static final String TAG = "PreSaleFragment";
 
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -33,9 +47,32 @@ public class PreSaleFragment extends Fragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
 
+        preSaleList = new ArrayList<>();
+
+        App.getApi().getData().enqueue(new Callback<List<PreSaleEntryModel>>() {
+            @Override
+            public void onResponse(Call<List<PreSaleEntryModel>> call, Response<List<PreSaleEntryModel>> response) {
+                if(response.body() == null){Log.i(TAG, "response.body == null");}
+                else {
+                    DemoServerApi.NEW_MAILINGS.clear();
+                    preSaleList.addAll(response.body());
+                    for (int i = 0; i < preSaleList.size(); i++) {
+                        NewMailing newMailing = new NewMailing(3, preSaleList.get(i).getName().toString(),
+                                preSaleList.get(i).getStatus().toString(), preSaleList.get(i).getDepartment().toString(), null, preSaleList.get(i).getId());
+
+                        DemoServerApi.NEW_MAILINGS.add(newMailing);
+                    }
+                    Log.i(TAG, "OK OK OK");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<PreSaleEntryModel>> call, Throwable t) {
+                Log.i(TAG, "An error occurred during networking!");
+            }
+        });
     }
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -53,11 +90,20 @@ public class PreSaleFragment extends Fragment {
         newMailingButton.setOnClickListener(v -> UiUtils.CreateNewMailingDialog("Новая рассылка", context, transaction));
 
         refreshButton.setOnClickListener(view -> {
-            assert getFragmentManager() != null;
-            preSaleFragment = new PreSaleFragment();
-            transaction.replace(R.id.nav_host_fragment, preSaleFragment);
-            transaction.commit();
+            preSaleViewModel.setUpdateFragment("preSaleFragment");
         });
+
+        preSaleViewModel.getUpdateFragment().observe(getViewLifecycleOwner(), nameFragment -> {
+            if(nameFragment == null) return;
+            if(nameFragment.equals("preSaleFragment")) {
+                transaction.replace(R.id.nav_host_fragment, preSaleFragment);
+                transaction.addToBackStack(null);
+                transaction.commit();
+
+                preSaleViewModel.setUpdateFragment(null);
+            }
+        });
+
 
         preSaleViewModel.getSelectedEditRow().observe(getViewLifecycleOwner(), newMailing -> {
             if (newMailing == null)

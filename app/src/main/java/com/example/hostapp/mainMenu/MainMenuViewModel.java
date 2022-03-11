@@ -33,4 +33,5 @@ public class MainMenuViewModel extends ViewModel {
     public void setSelectedMenuItem(MenuItem menuItem) {
         this.selectedMenuItem.setValue(menuItem);
     }
+
 }

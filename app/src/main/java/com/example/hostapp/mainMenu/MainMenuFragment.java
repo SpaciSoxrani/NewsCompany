@@ -15,12 +15,16 @@ import com.example.hostapp.R;
 import androidx.appcompat.widget.AppCompatImageView;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentContainerView;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 
 import com.example.hostapp.preSale.PreSaleFragment;
 import com.example.hostapp.serverapi.DemoServerApi;
+import com.google.android.material.navigation.NavigationView;
 
 import java.util.List;
 
@@ -29,6 +33,7 @@ public class MainMenuFragment extends Fragment {
     private Context context;
     Fragment preSaleFragment;
     Fragment mainMenuFragment;
+    private NavController navController;
 
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -66,6 +71,7 @@ public class MainMenuFragment extends Fragment {
                     transaction.replace(R.id.nav_host_fragment, preSaleFragment);
                     transaction.addToBackStack(null);
                     transaction.commit();
+                    mainMenuViewModel.setSelectedMenuItem(null);
                 }
             }
         });
