@@ -7,6 +7,8 @@
     <string name="button_ok">ОК</string>
     <string name="button_yes">Да</string>
 
+    <string name="wellcome_page">News.company</string>
+
     <string name="sign_in_text">Sign In</string>
     <string name="sign_in_small_text">Sign in now to access your CRM account.</string>
 

@@ -2,14 +2,13 @@ package com.example.hostapp.preSale;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.GridLayout;
 import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.widget.AppCompatImageView;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
@@ -17,8 +16,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.hostapp.R;
-import com.example.hostapp.mainMenu.MainMenuViewModel;
-import com.example.hostapp.mainMenu.MenuItem;
+import com.example.hostapp.serverapi.APIPreSaleDetailsModels.PreSaleDetailsModel;
 import com.example.hostapp.serverapi.DemoServerApi;
 import com.example.hostapp.utils.UiUtils;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -53,30 +51,29 @@ public class PreSaleDetailsFragment extends Fragment {
         });
 
 
-        preSaleDetailsViewModel.getMenuItems().observe(getViewLifecycleOwner(), new Observer<List<PreSaleEntry>>() {
+        preSaleDetailsViewModel.getMenuItems().observe(getViewLifecycleOwner(), new Observer<List<PreSaleDetailsModel>>() {
                     @Override
-                    public void onChanged(List<PreSaleEntry> preSaleEntries) {
+                    public void onChanged(List<PreSaleDetailsModel> preSaleEntries) {
                         redrawPreSaleCards(preSaleEntries, cardsContainer);
                     }
                 });
 
-                preSaleDetailsViewModel.getSelectedMenuItem().observe(getViewLifecycleOwner(), new Observer<PreSaleEntry>() {
+                preSaleDetailsViewModel.getSelectedMenuItem().observe(getViewLifecycleOwner(), new Observer<PreSaleDetailsModel>() {
                             @Override
-                            public void onChanged(PreSaleEntry preSaleEntry) {
+                            public void onChanged(PreSaleDetailsModel preSaleEntry) {
 
                             }
                         });
 
-        preSaleDetailsViewModel.setMenuItems(DemoServerApi.PRE_SALE_ENTRIES);
+        preSaleDetailsViewModel.setMenuItems(DemoServerApi.DETAILS_MODEL);
         setHasOptionsMenu(true);
         return root;
     }
 
-    private void redrawPreSaleCards(List<PreSaleEntry> preSaleEntries, LinearLayout container) {
+    private void redrawPreSaleCards(List<PreSaleDetailsModel> preSaleEntries, LinearLayout container) {
         container.removeAllViews();
-
         for (int i = 0; i < preSaleEntries.size(); i++) {
-            final PreSaleEntry preSaleEntry = preSaleEntries.get(i);
+            final PreSaleDetailsModel preSaleDetailsModel = preSaleEntries.get(i);
 
             card = LayoutInflater.from(getContext()).inflate(R.layout.card_pre_sale_details, container, false);
 
@@ -91,16 +88,16 @@ public class PreSaleDetailsFragment extends Fragment {
             AppCompatTextView requestView = card.findViewById(R.id.requestSend);
             AppCompatTextView numberView = card.findViewById(R.id.number);
 
-            districtView.setText(preSaleEntry.district);
-            timeZoneView.setText(preSaleEntry.timeZone);
-            organizationView.setText(preSaleEntry.organization);
-            nameView.setText(preSaleEntry.name);
-            positionView.setText(preSaleEntry.position);
-            phoneView.setText(preSaleEntry.phone);
-            emailView.setText(preSaleEntry.mail);
-            siteView.setText(preSaleEntry.site);
-            requestView.setText(preSaleEntry.requestSend);
-            numberView.setText(preSaleEntry.number);;
+            districtView.setText(preSaleDetailsModel.getRegion());
+            timeZoneView.setText(preSaleDetailsModel.getTimezone());
+            organizationView.setText(preSaleDetailsModel.getOrganization());
+            nameView.setText(preSaleDetailsModel.getFullName());
+            positionView.setText(preSaleDetailsModel.getJobTitle());
+            phoneView.setText(preSaleDetailsModel.getPhoneNumber());
+            emailView.setText(preSaleDetailsModel.getEmail());
+            siteView.setText(preSaleDetailsModel.getSite());
+            requestView.setText(preSaleDetailsModel.getRequestSent());
+            numberView.setText(preSaleDetailsModel.getIncomingNumber());;
 
             container.addView(card);
 

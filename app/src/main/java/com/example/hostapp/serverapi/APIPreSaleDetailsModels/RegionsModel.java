@@ -1,19 +1,18 @@
-package com.example.hostapp.serverapi.APIModels;
+package com.example.hostapp.serverapi.APIPreSaleDetailsModels;
 
-import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class StatusModel {
+public class RegionsModel {
     @SerializedName("id")
     @Expose
     private String id;
     @SerializedName("name")
     @Expose
     private String name;
-    @SerializedName("preSaleGroups")
+    @SerializedName("timezone")
     @Expose
-    private List<Object> preSaleGroups = null;
+    private String timezone;
 
     public String getId() {
         return id;
@@ -31,11 +30,11 @@ public class StatusModel {
         this.name = name;
     }
 
-    public List<Object> getPreSaleGroups() {
-        return preSaleGroups;
+    public String getTimezone() {
+        return timezone;
     }
 
-    public void setPreSaleGroups(List<Object> preSaleGroups) {
-        this.preSaleGroups = preSaleGroups;
+    public void setTimezone(String timezone) {
+        this.timezone = timezone;
     }
 }

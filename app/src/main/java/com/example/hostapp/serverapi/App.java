@@ -6,23 +6,27 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class App extends Application {
 
-    private static CRMLiteApi crmLiteApi;
+    private static CRMLitePreSalesApi crmLitePreSalesApi;
+    private static CRMLiteDetailsApi crmLiteDetailsApi;
 
     @Override
     public void onCreate() {
         super.onCreate();
 
-        //Базовая часть адреса
-        //Конвертер, необходимый для преобразования JSON'а в объекты
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://c583-94-75-13-255.ngrok.io") //Базовая часть адреса
-                .addConverterFactory(GsonConverterFactory.create()) //Конвертер, необходимый для преобразования JSON'а в объекты
+                .baseUrl("http://378b-176-59-193-18.ngrok.io")
+                .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
-        crmLiteApi = retrofit.create(CRMLiteApi.class); //Создаем объект, при помощи которого будем выполнять запросы
+        crmLitePreSalesApi = retrofit.create(CRMLitePreSalesApi.class);
+        crmLiteDetailsApi = retrofit.create(CRMLiteDetailsApi.class);
     }
 
-    public static CRMLiteApi getApi() {
-        return crmLiteApi;
+    public static CRMLitePreSalesApi getPreSalesApi() {
+        return crmLitePreSalesApi;
+    }
+
+    public static CRMLiteDetailsApi getDetailsApi() {
+        return crmLiteDetailsApi;
     }
 }

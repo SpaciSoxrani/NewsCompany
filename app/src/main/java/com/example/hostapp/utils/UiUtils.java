@@ -1,7 +1,6 @@
 package com.example.hostapp.utils;
 
 import android.content.Context;
-import android.database.DataSetObserver;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,7 +10,6 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
-import android.widget.SpinnerAdapter;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -24,17 +22,15 @@ import com.example.hostapp.preSale.PreSaleDetailsFragment;
 import com.example.hostapp.preSale.PreSaleEntry;
 import com.example.hostapp.preSale.PreSaleFragment;
 import com.example.hostapp.profile.ProfileFragment;
-import com.example.hostapp.serverapi.APIModels.PostPreSaleGroup;
-import com.example.hostapp.serverapi.APIModels.PreSaleEntryModel;
-import com.example.hostapp.serverapi.APIModels.PreSaleGroupModel;
-import com.example.hostapp.serverapi.APIModels.PreSaleGroupStatusesModel;
+import com.example.hostapp.serverapi.APIPreSaleModels.PUTEditGroupModel;
+import com.example.hostapp.serverapi.APIPreSaleModels.PostPreSaleGroup;
+import com.example.hostapp.serverapi.APIPreSaleModels.PreSaleGroupModel;
 import com.example.hostapp.serverapi.App;
 import com.example.hostapp.serverapi.DemoServerApi;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.textfield.TextInputEditText;
 
-import java.util.concurrent.atomic.AtomicInteger;
-
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -91,7 +87,7 @@ public class UiUtils extends AppCompatActivity {
                             }
                         };
 
-                        Call<PostPreSaleGroup> call = App.getApi().createPost(postPreSaleGroup);
+                        Call<PostPreSaleGroup> call = App.getPreSalesApi().createPost(postPreSaleGroup);
                         call.enqueue(new Callback<PostPreSaleGroup>() {
                             @Override
                             public void onResponse(Call<PostPreSaleGroup> call, Response<PostPreSaleGroup> response) {
@@ -190,34 +186,44 @@ public class UiUtils extends AppCompatActivity {
         Spinner spinStatus = createSpinnerStatus(context, statusGroup);
         Spinner spinDepart = createSpinnerDepartment(context, departGroup);
 
-        TextInputEditText status = new TextInputEditText(context);
-        status.setText(mailing.status);
-
-        TextInputEditText depart = new TextInputEditText(context);
-        depart.setText(mailing.depart);
-
         lila1.addView(name);
         lila1.addView(spinStatus);
         lila1.addView(spinDepart);
-
-
-        lila1.addView(status);
-        lila1.addView(depart);
 
         AlertDialog.Builder dialog = new MaterialAlertDialogBuilder(context)
                 .setTitle(title)
                 .setView(lila1)
                 .setMessage(description)
                 .setPositiveButton(R.string.button_edit, (dialog1, whichButton) -> {
+                    PUTEditGroupModel putEditGroupModel = new PUTEditGroupModel();
+                    putEditGroupModel.setName(name.getText().toString());
 
-                    DemoServerApi.NEW_MAILINGS.remove(mailing);
-                    String name1 = name.getText().toString();
-                    NewMailing newMailing = new NewMailing(3, name.getText().toString(), status.getText().toString(), depart.getText().toString(), null, null);
-                    DemoServerApi.NEW_MAILINGS.add(newMailing);
-                    Fragment preSaleFragment = new PreSaleFragment();
-                    transaction.replace(R.id.nav_host_fragment, preSaleFragment);
-                    transaction.addToBackStack(null);
-                    transaction.commit();
+                    for(int i = 0; i < DemoServerApi.MAIN_DEPARTMENTS_MODEL_LIST.size(); i ++){
+                        if(departGroup[0].equals(DemoServerApi.MAIN_DEPARTMENTS_MODEL_LIST.get(i).getName())){
+                            putEditGroupModel.setDepartmentId(DemoServerApi.MAIN_DEPARTMENTS_MODEL_LIST.get(i).getId());
+                        }
+                    };
+
+                    for(int i = 0; i < DemoServerApi.PRE_SALE_GROUP_STATUSES_MODEL_LIST.size(); i ++){
+                        if(statusGroup[0].equals(DemoServerApi.PRE_SALE_GROUP_STATUSES_MODEL_LIST.get(i).getName())){
+                            putEditGroupModel.setStatusId(DemoServerApi.PRE_SALE_GROUP_STATUSES_MODEL_LIST.get(i).getId());
+                        }
+                    };
+                    putEditGroupModel.setId(mailing.idGroup);
+
+                    Call<ResponseBody> call = App.getPreSalesApi().editPreSaleGroup(putEditGroupModel.getId(), putEditGroupModel);
+                    call.enqueue(new Callback<ResponseBody>() {
+                        @Override
+                        public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                            Log.i("Edit group", "OK"  );
+                        }
+
+                        @Override
+                        public void onFailure(Call<ResponseBody> call, Throwable t) {
+                            Log.i("Edit group", "NOT OK");
+                        }
+                    });
+
                 })
                 .setNegativeButton(R.string.button_close, (dialogInterface, i) -> dialogInterface.cancel());
 
@@ -239,7 +245,7 @@ public class UiUtils extends AppCompatActivity {
                 .setView(img)
                 .setPositiveButton(R.string.button_ok, (dialogInterface, i) -> {
 
-                    Call<PreSaleGroupModel> call = App.getApi().deletePreSaleGroup(mailing.idGroup);
+                    Call<PreSaleGroupModel> call = App.getPreSalesApi().deletePreSaleGroup(mailing.idGroup);
 
                     call.enqueue(new Callback<PreSaleGroupModel>() {
                         @Override

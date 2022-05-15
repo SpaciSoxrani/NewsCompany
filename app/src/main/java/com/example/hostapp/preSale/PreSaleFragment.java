@@ -1,13 +1,11 @@
 package com.example.hostapp.preSale;
 
 import android.content.Context;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
@@ -17,12 +15,13 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.navigation.Navigation;
 
 import com.example.hostapp.R;
+import com.example.hostapp.serverapi.APIPreSaleDetailsModels.PreSaleDetailsModel;
+import com.example.hostapp.serverapi.APIPreSaleDetailsModels.RegionsModel;
 import com.example.hostapp.serverapi.App;
 import com.example.hostapp.serverapi.DemoServerApi;
-import com.example.hostapp.serverapi.APIModels.PreSaleEntryModel;
+import com.example.hostapp.serverapi.APIPreSaleModels.PreSaleEntryModel;
 import com.example.hostapp.utils.UiUtils;
 import com.google.android.material.button.MaterialButton;
 
@@ -51,7 +50,7 @@ public class PreSaleFragment extends Fragment {
 
         preSaleList = new ArrayList<>();
 
-        App.getApi().getData().enqueue(new Callback<List<PreSaleEntryModel>>() {
+        App.getPreSalesApi().getData().enqueue(new Callback<List<PreSaleEntryModel>>() {
             @Override
             public void onResponse(Call<List<PreSaleEntryModel>> call, Response<List<PreSaleEntryModel>> response) {
                 if(response.body() == null){Log.i(TAG, "response.body == null");}
@@ -91,16 +90,20 @@ public class PreSaleFragment extends Fragment {
 
         refreshButton.setOnClickListener(view -> {
             preSaleViewModel.setUpdateFragment("preSaleFragment");
+            transaction.replace(R.id.nav_host_fragment, preSaleFragment);
+//               transaction.addToBackStack(null);
+                transaction.commit();
+                preSaleViewModel.setUpdateFragment(null);
         });
 
         preSaleViewModel.getUpdateFragment().observe(getViewLifecycleOwner(), nameFragment -> {
             if(nameFragment == null) return;
             if(nameFragment.equals("preSaleFragment")) {
-                transaction.replace(R.id.nav_host_fragment, preSaleFragment);
-                transaction.addToBackStack(null);
-                transaction.commit();
-
-                preSaleViewModel.setUpdateFragment(null);
+//                transaction.replace(R.id.nav_host_fragment, preSaleFragment);
+////                transaction.addToBackStack(null);
+//                transaction.commit();
+//
+//                preSaleViewModel.setUpdateFragment(null);
             }
         });
 
@@ -109,6 +112,7 @@ public class PreSaleFragment extends Fragment {
             if (newMailing == null)
                 return;
             UiUtils.ShowEditMailingDialogue("Редактирование", "Измените данные рассылки", context, newMailing, transaction);
+            preSaleViewModel.setSelectedEditRow(null);
         });
 
 
@@ -119,13 +123,34 @@ public class PreSaleFragment extends Fragment {
                 return;
             UiUtils.ShowDeleteDialog("Удаление рассылки", R.string.dialogue_delete_desc,
                        context, newMailing, transaction);
+            preSaleViewModel.setDeleteMailing(null);
         });
 
         preSaleViewModel.getSelectedRow().observe(getViewLifecycleOwner(), newMailing -> {
             if (newMailing == null)
                 return;
+
+            App.getDetailsApi().getDetailsForPreSale(newMailing.idGroup).enqueue(new Callback<List<PreSaleDetailsModel>>() {
+                @Override
+                public void onResponse(Call<List<PreSaleDetailsModel>> call, Response<List<PreSaleDetailsModel>> response) {
+                    if(response.body() == null){
+                        Log.i(TAG, "response.body of PreSaleDetailsModel == null");}
+                    else {
+                        DemoServerApi.DETAILS_MODEL.clear();
+                        DemoServerApi.DETAILS_MODEL.addAll(response.body());
+                        Log.i(TAG, "Get list PreSaleDetailsModel");
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<List<PreSaleDetailsModel>> call, Throwable t) {
+                    Log.i(TAG, "Enable to get list PreSaleDetailsModel!");
+                }
+            });
+
             UiUtils.ShowGoToEditRowDialog("Редактирование рассылки", "Перейти к редактированию контактов выбранной рассылки?",
                     context, transaction);
+            preSaleViewModel.setSelectedRow(null);
         });
 
         preSaleViewModel.setNewMailings(DemoServerApi.NEW_MAILINGS);

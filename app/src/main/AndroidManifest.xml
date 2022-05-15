@@ -13,7 +13,7 @@
         android:name=".serverapi.App"
         android:theme="@style/Theme.HostApp">
         <activity
-            android:name=".login.LoginActivity"
+            android:name=".wellcome.WellcomeActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

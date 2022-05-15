@@ -5,7 +5,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".mainMenu.MainMenuFragment"
     android:layout_gravity="center_horizontal"
-    android:tag="fragment_main_menu">
+    android:tag="fragment_main_menu"
+    android:background="@color/white">
 
     <LinearLayout
         android:layout_width="match_parent"

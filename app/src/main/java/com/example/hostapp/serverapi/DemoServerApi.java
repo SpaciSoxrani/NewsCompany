@@ -3,8 +3,11 @@ package com.example.hostapp.serverapi;
 import com.example.hostapp.mainMenu.MenuItem;
 import com.example.hostapp.preSale.NewMailing;
 import com.example.hostapp.preSale.PreSaleEntry;
-import com.example.hostapp.serverapi.APIModels.MainDepartmentsModel;
-import com.example.hostapp.serverapi.APIModels.PreSaleGroupStatusesModel;
+import com.example.hostapp.serverapi.APIPreSaleDetailsModels.PreSaleDetailsModel;
+import com.example.hostapp.serverapi.APIPreSaleDetailsModels.RegionsModel;
+import com.example.hostapp.serverapi.APIPreSaleDetailsModels.StatusesModel;
+import com.example.hostapp.serverapi.APIPreSaleModels.MainDepartmentsModel;
+import com.example.hostapp.serverapi.APIPreSaleModels.PreSaleGroupStatusesModel;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -16,7 +19,7 @@ public class DemoServerApi {
 
     public static final Map<String, String> CORRECT_LOGIN_PAIRS = new HashMap<String, String>() {
         {
-            put("A.Smirnova@hostco.ru", "AShost");
+            put("A.Smirnova@hostco.ru", "SS909ss_pr");
             put("логин", "пароль");
             put("настя", "смирнова");
             put("1", "1");
@@ -42,19 +45,14 @@ public class DemoServerApi {
     }};
 
     public static final List<NewMailing> NEW_MAILINGS = new ArrayList<NewMailing>();
+
     public static final List<MainDepartmentsModel> MAIN_DEPARTMENTS_MODEL_LIST = new ArrayList<MainDepartmentsModel>();
     public static final List<PreSaleGroupStatusesModel> PRE_SALE_GROUP_STATUSES_MODEL_LIST = new ArrayList<PreSaleGroupStatusesModel>();
 
-    public  static  final  List<PreSaleEntry> PRE_SALE_ENTRIES = new ArrayList<PreSaleEntry>(){{
-        add(new PreSaleEntry(0, "Свердловская область", "(ЕКБ+0)", "Областной диспансер №2",
-                "Матушкин Матвей Федорович", "Главный врач", "89901234567", "test1@gmail.com", "http://test.com",
-                "Иск №21109 от 19.12.21", "№480019"));
-        add(new PreSaleEntry(1, "Оренбурская область", "(ЕКБ+0)", "Городская больница №1",
-                "Иванов Иван Андреевич", "Главный врач", "89901230888", "test2@gmail.com", "http://test2.com",
-                "", ""));
-        add(new PreSaleEntry(2, "Республика Бурятия", "(ЕКБ+3)", "Минздрав",
-                "Сергеев Григорий Антонович", "Министр", "89956777767", "test3@gmail.com", "http://test3.com",
-                "", ""));
-    }};
-    //public static List<PreSaleEntryModel>  PRE_SALE_ENTRY_MODELS = new ArrayList<PreSaleEntryModel>();
+    public  static  final  List<PreSaleEntry> PRE_SALE_ENTRIES = new ArrayList<PreSaleEntry>();
+
+    public static final List<RegionsModel> REGIONS_MODEL_LIST = new ArrayList<RegionsModel>();
+    public static final List<StatusesModel> STATUSES_MODEL_LIST = new ArrayList<StatusesModel>();
+
+    public static final List<PreSaleDetailsModel> DETAILS_MODEL = new ArrayList<PreSaleDetailsModel>();
 }

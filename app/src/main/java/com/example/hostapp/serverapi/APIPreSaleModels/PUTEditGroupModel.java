@@ -1,9 +1,9 @@
-package com.example.hostapp.serverapi.APIModels;
+package com.example.hostapp.serverapi.APIPreSaleModels;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class PostPreSaleGroup {
+public class PUTEditGroupModel {
     @SerializedName("name")
     @Expose
     private String name;
@@ -13,6 +13,9 @@ public class PostPreSaleGroup {
     @SerializedName("departmentId")
     @Expose
     private String departmentId;
+    @SerializedName("id")
+    @Expose
+    private String id;
 
     public String getName() {
         return name;
@@ -38,4 +41,11 @@ public class PostPreSaleGroup {
         this.departmentId = departmentId;
     }
 
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 }

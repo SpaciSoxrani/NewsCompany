@@ -1,4 +1,4 @@
-package com.example.hostapp.serverapi.APIModels;
+package com.example.hostapp.serverapi.APIPreSaleModels;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

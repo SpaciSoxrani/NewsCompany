@@ -1,9 +1,9 @@
-package com.example.hostapp.serverapi.APIModels;
+package com.example.hostapp.serverapi.APIPreSaleDetailsModels;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class PreSaleGroupStatusesModel {
+public class StatusesModel {
     @SerializedName("id")
     @Expose
     private String id;

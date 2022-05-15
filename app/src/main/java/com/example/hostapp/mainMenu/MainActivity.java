@@ -13,11 +13,13 @@ import android.util.Log;
 
 import com.example.hostapp.R;
 import com.example.hostapp.preSale.NewMailing;
-import com.example.hostapp.serverapi.APIModels.MainDepartmentsModel;
-import com.example.hostapp.serverapi.APIModels.PreSaleGroupStatusesModel;
+import com.example.hostapp.serverapi.APIPreSaleDetailsModels.RegionsModel;
+import com.example.hostapp.serverapi.APIPreSaleDetailsModels.StatusesModel;
+import com.example.hostapp.serverapi.APIPreSaleModels.MainDepartmentsModel;
+import com.example.hostapp.serverapi.APIPreSaleModels.PreSaleGroupStatusesModel;
 import com.example.hostapp.serverapi.App;
 import com.example.hostapp.serverapi.DemoServerApi;
-import com.example.hostapp.serverapi.APIModels.PreSaleEntryModel;
+import com.example.hostapp.serverapi.APIPreSaleModels.PreSaleEntryModel;
 import com.google.android.material.appbar.MaterialToolbar;
 
 import java.util.ArrayList;
@@ -51,7 +53,7 @@ public class MainActivity extends AppCompatActivity{
         preSaleList = new ArrayList<>();
         mainDepartmentsModelList = new ArrayList<>();
 
-        App.getApi().getData().enqueue(new Callback<List<PreSaleEntryModel>>() {
+        App.getPreSalesApi().getData().enqueue(new Callback<List<PreSaleEntryModel>>() {
             @Override
             public void onResponse(Call<List<PreSaleEntryModel>> call, Response<List<PreSaleEntryModel>> response) {
                 if(response.body() == null){Log.i(TAG, "response.body == null");}
@@ -74,7 +76,7 @@ public class MainActivity extends AppCompatActivity{
             }
         });
 
-        App.getApi().getMainDepartments().enqueue(new Callback<List<MainDepartmentsModel>>() {
+        App.getPreSalesApi().getMainDepartments().enqueue(new Callback<List<MainDepartmentsModel>>() {
             @Override
             public void onResponse(Call<List<MainDepartmentsModel>> call, Response<List<MainDepartmentsModel>> response) {
                 if(response.body() == null){Log.i(TAG, "response.body == null");}
@@ -91,7 +93,7 @@ public class MainActivity extends AppCompatActivity{
             }
         });
 
-        App.getApi().getPresaleGroupStatuses().enqueue(new Callback<List<PreSaleGroupStatusesModel>>() {
+        App.getPreSalesApi().getPresaleGroupStatuses().enqueue(new Callback<List<PreSaleGroupStatusesModel>>() {
             @Override
             public void onResponse(Call<List<PreSaleGroupStatusesModel>> call, Response<List<PreSaleGroupStatusesModel>> response) {
                 if(response.body() == null){Log.i(TAG, "response.body == null");}
@@ -105,6 +107,42 @@ public class MainActivity extends AppCompatActivity{
             @Override
             public void onFailure(Call<List<PreSaleGroupStatusesModel>> call, Throwable t) {
                 Log.i(TAG, "Enable to get group statuses!");
+            }
+        });
+
+        App.getDetailsApi().getRegions().enqueue(new Callback<List<RegionsModel>>() {
+            @Override
+            public void onResponse(Call<List<RegionsModel>> call, Response<List<RegionsModel>> response) {
+                if(response.body() == null){
+                    Log.i(TAG, "response.body of regions == null");}
+                else {
+                    DemoServerApi.REGIONS_MODEL_LIST.clear();
+                    DemoServerApi.REGIONS_MODEL_LIST.addAll(response.body());
+                    Log.i(TAG, "Get list regions");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<RegionsModel>> call, Throwable t) {
+                Log.i(TAG, "Enable to get list regions!");
+            }
+        });
+
+        App.getDetailsApi().getStatuses().enqueue(new Callback<List<StatusesModel>>() {
+            @Override
+            public void onResponse(Call<List<StatusesModel>> call, Response<List<StatusesModel>> response) {
+                if(response.body() == null){
+                    Log.i(TAG, "response.body of statuses == null");}
+                else {
+                    DemoServerApi.STATUSES_MODEL_LIST.clear();
+                    DemoServerApi.STATUSES_MODEL_LIST.addAll(response.body());
+                    Log.i(TAG, "Get list statuses");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<StatusesModel>> call, Throwable t) {
+                Log.i(TAG, "Enable to get list statuses!");
             }
         });
 
