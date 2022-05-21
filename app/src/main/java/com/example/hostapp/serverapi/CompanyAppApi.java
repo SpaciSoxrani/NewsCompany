@@ -7,13 +7,14 @@ import com.example.hostapp.serverapi.APIPreSaleDetailsModels.StatusesModel;
 import java.util.List;
 
 import okhttp3.ResponseBody;
+
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
 
-public interface CRMLiteDetailsApi {
+public interface CompanyAppApi {
     @GET("/PreSales/PreSaleRegions")
     Call<List<RegionsModel>> getRegions();
 
@@ -25,4 +26,5 @@ public interface CRMLiteDetailsApi {
 
     @PUT("/PreSales/EditPreSale/{id}")
     Call<ResponseBody> putEditDetails(@Path("id") String id, @Body PreSaleDetailsModel preSaleDetailsModel);
+
 }

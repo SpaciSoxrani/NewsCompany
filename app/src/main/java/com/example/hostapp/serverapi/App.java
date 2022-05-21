@@ -7,7 +7,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class App extends Application {
 
     private static CRMLitePreSalesApi crmLitePreSalesApi;
-    private static CRMLiteDetailsApi crmLiteDetailsApi;
+    private static CompanyAppApi companyAppApi;
 
     @Override
     public void onCreate() {
@@ -18,15 +18,17 @@ public class App extends Application {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
+
+        companyAppApi = retrofit.create(CompanyAppApi.class);
+
         crmLitePreSalesApi = retrofit.create(CRMLitePreSalesApi.class);
-        crmLiteDetailsApi = retrofit.create(CRMLiteDetailsApi.class);
     }
 
     public static CRMLitePreSalesApi getPreSalesApi() {
         return crmLitePreSalesApi;
     }
 
-    public static CRMLiteDetailsApi getDetailsApi() {
-        return crmLiteDetailsApi;
+    public static CompanyAppApi getDetailsApi() {
+        return companyAppApi;
     }
 }

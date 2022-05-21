@@ -20,7 +20,7 @@
             android:text="@string/title_profile" />
 
         <LinearLayout
-        android:layout_width="@dimen/login_menu_width"
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_centerInParent="true"
         android:layout_marginTop="@dimen/card_vertical_margin"

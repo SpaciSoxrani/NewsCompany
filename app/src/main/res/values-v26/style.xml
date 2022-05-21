@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="TitleNameApp" parent="Widget.AppCompat.TextView">
+        <item name="android:font">@font/main_font</item>
+        <item name="android:textSize">@dimen/font_size_title_name_app</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+    <style name="DefaultBoldTextStyle">
+        <item name="android:font">@font/inter_semibold</item>
+        <item name="android:textSize">@dimen/font_size_sign_in_small</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+</resources>

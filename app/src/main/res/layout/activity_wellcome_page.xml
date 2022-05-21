@@ -22,7 +22,7 @@
             android:gravity="center"
 
             android:minHeight="48dp"
-            android:text="@string/wellcome_page"
+            android:text="@string/title_app_name"
             android:textColor="@color/black"
             android:textSize="@dimen/font_size_sign_in_large" />
     </LinearLayout>

@@ -1,8 +1,15 @@
 package com.example.hostapp.login;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.TextPaint;
+import android.text.method.LinkMovementMethod;
+import android.text.style.ClickableSpan;
 import android.view.View;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -31,6 +38,26 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        //todo: new method for spannable string
+        SpannableString textAcceptTermsCond= new SpannableString(getString(R.string.accept_terms_cond));
+        ClickableSpan clickableSpan = new ClickableSpan() {
+            @Override
+            public void onClick(View textView) {
+
+            }
+            @Override
+            public void updateDrawState(TextPaint ds) {
+                super.updateDrawState(ds);
+                ds.setUnderlineText(false);
+            }
+        };
+        textAcceptTermsCond.setSpan(clickableSpan, 33, 53, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        TextView textView = (TextView) findViewById(R.id.accept_terms_cond);
+        textView.setText(textAcceptTermsCond);
+        textView.setMovementMethod(LinkMovementMethod.getInstance());
+        textView.setHighlightColor(Color.TRANSPARENT);
+
+
         //private AppCompatTextView signUpButton;
         MaterialButton signInButton = findViewById(R.id.signInButton);
 
@@ -42,6 +69,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         loginViewModel = new ViewModelProvider(this).get(LoginViewModel.class);
         signInButton.setOnClickListener(this);
+
 
         loginViewModel.getIsLoginError().observe(this, isError -> {
             if (isError)

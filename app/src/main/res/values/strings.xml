@@ -1,19 +1,19 @@
 <resources>
     <string name="app_name">Host App</string>
-    <string name="login">Email address</string>
+    <string name="login">Login</string>
     <string name="password">Password</string>
-    <string name="sign_in">LOGIN</string>
+    <string name="sign_in">Войти</string>
     <string name="sign_up">Создать аккаунт?</string>
     <string name="button_ok">ОК</string>
     <string name="button_yes">Да</string>
 
-    <string name="wellcome_page">News.company</string>
+    <string name="title_app_name">News.company</string>
 
     <string name="sign_in_text">Sign In</string>
-    <string name="sign_in_small_text">Sign in now to access your CRM account.</string>
-
+    <string name="sign_in_small_text">Вход в аккаунт</string>
     <string name="enter_login">Введите логин</string>
     <string name="enter_password">Введите пароль</string>
+    <string name="accept_terms_cond">Регистрируясь, вы ознакомились с Terms and Conditions</string>
 
     <string name="error">Ошибка</string>
     <string name="wrong_sign_in_credentials">Логин или пароль введены неверно</string>
