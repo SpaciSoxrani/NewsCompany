@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -12,49 +13,40 @@
         >
 
         <com.google.android.material.appbar.CollapsingToolbarLayout
+            android:id="@+id/collapsingToolbar"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:expandedTitleMarginStart="72dp"
             app:expandedTitleMarginBottom="28dp"
             app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"
-            app:contentScrim="?attr/colorPrimary"
+            app:contentScrim="?attr/colorPrimaryVariant"
             app:statusBarScrim="?attr/colorPrimaryVariant"
             android:fitsSystemWindows="true"
             app:expandedTitleTextAppearance="@style/TextAppearance.App.CollapsingToolbar.Expanded"
             app:collapsedTitleTextAppearance="@style/TextAppearance.App.CollapsingToolbar.Collapsed">
 
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:src="@drawable/toolbar_pic"
-                android:scaleType="centerCrop"
-                android:fitsSystemWindows="true"
-                android:contentDescription="@string/title_menu"
-                />
+<!--            <ImageView-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="match_parent"-->
+<!--                android:src="@drawable/toolbar_pic"-->
+<!--                android:scaleType="centerCrop"-->
+<!--                android:fitsSystemWindows="true"-->
+<!--                android:contentDescription="@string/title_menu"-->
+<!--                />-->
 
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/topAppBar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             app:menu="@menu/main_menu_top_toolbar"
-            app:title="@string/title_main"
+            app:title="@string/title_app_name"
+            app:titleTextColor="@color/black"
             app:layout_collapseMode="pin"
             app:navigationIcon="@drawable/ic_menu_top_toolbar_24"/>
-
-<!--            <ImageView-->
-<!--                android:id="@+id/logo_top_toolbar"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:src="@mipmap/ic_logo_top_toolbar_foreground"-->
-<!--                android:layout_gravity="center"/>-->
-
-
         </com.google.android.material.appbar.CollapsingToolbarLayout>
 
     </com.google.android.material.appbar.AppBarLayout>
 
-
-    <!-- Note: A RecyclerView can also be used -->
     <androidx.core.widget.NestedScrollView
         android:id="@+id/scrollBar"
         android:layout_width="match_parent"
@@ -68,12 +60,37 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:defaultNavHost="true"
-            app:layout_constraintBottom_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/nav_view"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:navGraph="@navigation/menu_navigation" />
-
+            app:navGraph="@navigation/menu_navigation" />\
     </androidx.core.widget.NestedScrollView>
+
+
+
+    <!-- Note: A RecyclerView can also be used -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/scrollBarMain"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingTop="?attr/actionBarSize">
+        <!-- Scrollable content -->
+
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/nav_view"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="0dp"
+            android:layout_marginEnd="0dp"
+            android:background="?android:attr/windowBackground"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:menu="@menu/bottom_navigation_toolbar" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

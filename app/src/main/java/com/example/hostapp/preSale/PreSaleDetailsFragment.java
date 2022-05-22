@@ -2,7 +2,6 @@ package com.example.hostapp.preSale;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,7 +35,7 @@ public class PreSaleDetailsFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         preSaleDetailsViewModel = new ViewModelProvider(this).get(PreSaleDetailsViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_pre_sale_details, container, false);
+        View root = inflater.inflate(R.layout.fragment_filter_mails, container, false);
         context = root.getContext();
 
         final LinearLayout cardsContainer = root.findViewById(R.id.layout_container);

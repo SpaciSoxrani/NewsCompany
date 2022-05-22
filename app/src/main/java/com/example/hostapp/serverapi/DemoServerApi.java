@@ -1,5 +1,7 @@
 package com.example.hostapp.serverapi;
 
+import com.example.hostapp.R;
+import com.example.hostapp.mails.MailingItem;
 import com.example.hostapp.mainMenu.MenuItem;
 import com.example.hostapp.preSale.NewMailing;
 import com.example.hostapp.preSale.PreSaleEntry;
@@ -55,4 +57,7 @@ public class DemoServerApi {
     public static final List<StatusesModel> STATUSES_MODEL_LIST = new ArrayList<StatusesModel>();
 
     public static final List<PreSaleDetailsModel> DETAILS_MODEL = new ArrayList<PreSaleDetailsModel>();
+
+// full list entries of mailings
+    public static final List<MailingItem> TEST_MAILINGS = new ArrayList<MailingItem>();
 }

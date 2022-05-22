@@ -21,7 +21,7 @@ public class DetailsEditingFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.fragment_pre_sale_details, container, false);
+        View root = inflater.inflate(R.layout.fragment_filter_mails, container, false);
         context = root.getContext();
 
         return root;

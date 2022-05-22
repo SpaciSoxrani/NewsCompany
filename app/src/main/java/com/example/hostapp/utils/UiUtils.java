@@ -20,7 +20,7 @@ import com.example.hostapp.R;
 import com.example.hostapp.preSale.NewMailing;
 import com.example.hostapp.preSale.PreSaleDetailsFragment;
 import com.example.hostapp.preSale.PreSaleEntry;
-import com.example.hostapp.preSale.PreSaleFragment;
+//import com.example.hostapp.preSale.PreSaleFragment;
 import com.example.hostapp.profile.ProfileFragment;
 import com.example.hostapp.serverapi.APIPreSaleModels.PUTEditGroupModel;
 import com.example.hostapp.serverapi.APIPreSaleModels.PostPreSaleGroup;
@@ -230,48 +230,48 @@ public class UiUtils extends AppCompatActivity {
         dialog.show();
     }
 
-    public static void ShowDeleteDialog(String title, int description, Context context, NewMailing mailing, FragmentTransaction transaction){
-        LinearLayout lila1= new LinearLayout(context);
-        lila1.setLayoutParams(new LinearLayout.LayoutParams(80, LinearLayout.LayoutParams.WRAP_CONTENT));
-        lila1.setOrientation(LinearLayout.VERTICAL);
-
-        ImageView img = new ImageView(context);
-        img.setImageResource(R.drawable.ic_twotone_warning_24);
-        img.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-
-        AlertDialog.Builder dialog = new MaterialAlertDialogBuilder(context)
-                .setTitle(title)
-                .setMessage(description)
-                .setView(img)
-                .setPositiveButton(R.string.button_ok, (dialogInterface, i) -> {
-
-                    Call<PreSaleGroupModel> call = App.getPreSalesApi().deletePreSaleGroup(mailing.idGroup);
-
-                    call.enqueue(new Callback<PreSaleGroupModel>() {
-                        @Override
-                        public void onResponse(Call<PreSaleGroupModel> call, Response<PreSaleGroupModel> response) {
-                            Log.i("Delete group", "OK OK OK");
-                        }
-
-                        @Override
-                        public void onFailure(Call<PreSaleGroupModel> call, Throwable t) {
-                            Log.i("Delete group", "NOOOOO");
-                        }
-                    });
-
-                    DemoServerApi.NEW_MAILINGS.remove(mailing);
-
-                    Fragment preSaleFragment = new PreSaleFragment();
-//                    transaction.replace(R.id.nav_host_fragment, preSaleFragment);
-//                    transaction.addToBackStack(null);
-//                    transaction.commit();
-
-                    dialogInterface.cancel();
-
-                })
-                .setNegativeButton(R.string.button_close, (dialogInterface, i) -> dialogInterface.cancel());
-        dialog.show();
-    }
+//    public static void ShowDeleteDialog(String title, int description, Context context, NewMailing mailing, FragmentTransaction transaction){
+//        LinearLayout lila1= new LinearLayout(context);
+//        lila1.setLayoutParams(new LinearLayout.LayoutParams(80, LinearLayout.LayoutParams.WRAP_CONTENT));
+//        lila1.setOrientation(LinearLayout.VERTICAL);
+//
+//        ImageView img = new ImageView(context);
+//        img.setImageResource(R.drawable.ic_twotone_warning_24);
+//        img.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+//
+//        AlertDialog.Builder dialog = new MaterialAlertDialogBuilder(context)
+//                .setTitle(title)
+//                .setMessage(description)
+//                .setView(img)
+//                .setPositiveButton(R.string.button_ok, (dialogInterface, i) -> {
+//
+//                    Call<PreSaleGroupModel> call = App.getPreSalesApi().deletePreSaleGroup(mailing.idGroup);
+//
+//                    call.enqueue(new Callback<PreSaleGroupModel>() {
+//                        @Override
+//                        public void onResponse(Call<PreSaleGroupModel> call, Response<PreSaleGroupModel> response) {
+//                            Log.i("Delete group", "OK OK OK");
+//                        }
+//
+//                        @Override
+//                        public void onFailure(Call<PreSaleGroupModel> call, Throwable t) {
+//                            Log.i("Delete group", "NOOOOO");
+//                        }
+//                    });
+//
+//                    DemoServerApi.NEW_MAILINGS.remove(mailing);
+//
+//                    Fragment preSaleFragment = new PreSaleFragment();
+////                    transaction.replace(R.id.nav_host_fragment, preSaleFragment);
+////                    transaction.addToBackStack(null);
+////                    transaction.commit();
+//
+//                    dialogInterface.cancel();
+//
+//                })
+//                .setNegativeButton(R.string.button_close, (dialogInterface, i) -> dialogInterface.cancel());
+//        dialog.show();
+//    }
 
     public static void ShowGoToEditRowDialog(String title, String description, Context context, FragmentTransaction transaction){
         AlertDialog.Builder dialog = new MaterialAlertDialogBuilder(context)

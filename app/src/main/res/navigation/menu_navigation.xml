@@ -3,40 +3,38 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/menu_navigation"
-    app:startDestination="@+id/navigation_main_menu">
+    app:startDestination="@+id/navigation_mails">
+
+<!--    <fragment-->
+<!--        android:id="@+id/navigation_main_menu"-->
+<!--        android:name="com.example.hostapp.mainMenu.MainMenuFragment"-->
+<!--        android:label="@string/title_menu"-->
+<!--        tools:layout="@layout/fragment_main_menu">-->
+<!--        <action android:id="@+id/action_navigation_main_menu_to_navigation_profile"-->
+<!--            app:destination="@id/navigation_profile"/>-->
+
+<!--        <action android:id="@+id/action_navigation_main_menu_to_pre_sale_fragment"-->
+<!--            app:destination="@id/navigation_pre_sale"/>-->
+<!--    </fragment>-->
+
+<!--    <fragment-->
+<!--        android:id="@+id/navigation_profile"-->
+<!--        android:name="com.example.hostapp.profile.ProfileFragment"-->
+<!--        android:label="@string/title_profile"-->
+<!--        tools:layout="@layout/fragment_profile" />-->
 
     <fragment
-        android:id="@+id/navigation_main_menu"
-        android:name="com.example.hostapp.mainMenu.MainMenuFragment"
-        android:label="@string/title_menu"
-        tools:layout="@layout/fragment_main_menu">
-        <action android:id="@+id/action_navigation_main_menu_to_navigation_profile"
-            app:destination="@id/navigation_profile"/>
-
-        <action android:id="@+id/action_navigation_main_menu_to_pre_sale_fragment"
-            app:destination="@id/navigation_pre_sale"/>
+        android:id="@+id/navigation_mails"
+        android:name="com.example.hostapp.mails.MailsFragment"
+        android:label="@string/bottom_nav_mails"
+        tools:layout="@layout/fragment_mails">
     </fragment>
 
     <fragment
-        android:id="@+id/navigation_profile"
-        android:name="com.example.hostapp.profile.ProfileFragment"
-        android:label="@string/title_profile"
-        tools:layout="@layout/fragment_profile" />
-
-    <fragment
-        android:id="@+id/navigation_pre_sale"
-        android:name="com.example.hostapp.preSale.PreSaleFragment"
-        android:label="@string/title_pre_sale"
-        tools:layout="@layout/fragment_pre_sale">
-        <action android:id="@+id/action_navigation_presale_to_presale"
-            app:destination="@id/navigation_pre_sale"/>
-    </fragment>
-
-    <fragment
-        android:id="@+id/navigation_pre_sale_details"
+        android:id="@+id/navigation_filters_mail"
         android:name="com.example.hostapp.preSale.PreSaleDetailsFragment"
-        android:label="@string/title_pre_sale"
-        tools:layout="@layout/fragment_pre_sale_details">
+        android:label="@string/bottom_nav_edit"
+        tools:layout="@layout/fragment_filter_mails">
     </fragment>
 
 </navigation>

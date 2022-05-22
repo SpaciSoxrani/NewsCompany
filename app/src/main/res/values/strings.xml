@@ -1,28 +1,30 @@
 <resources>
     <string name="app_name">Host App</string>
+<!--    login activity-->
     <string name="login">Login</string>
     <string name="password">Password</string>
     <string name="sign_in">Войти</string>
     <string name="sign_up">Создать аккаунт?</string>
     <string name="button_ok">ОК</string>
     <string name="button_yes">Да</string>
-
-    <string name="title_app_name">News.company</string>
-
-    <string name="sign_in_text">Sign In</string>
     <string name="sign_in_small_text">Вход в аккаунт</string>
     <string name="enter_login">Введите логин</string>
     <string name="enter_password">Введите пароль</string>
     <string name="accept_terms_cond">Регистрируясь, вы ознакомились с Terms and Conditions</string>
-
     <string name="error">Ошибка</string>
     <string name="wrong_sign_in_credentials">Логин или пароль введены неверно</string>
+<!--  bottom  navigation -->
+    <string name="bottom_nav_mails">Новости</string>
+    <string name="bottom_nav_edit">Фильтры рассылки</string>
+<!--    <string name="sign_in_text">Sign In</string>-->
+
+
 
     <string name="title_menu">Меню</string>
     <string name="title_logo">Лого</string>
     <string name="title_profile">Профиль</string>
     <string name="title_pre_sale">Pre-sale</string>
-    <string name="title_main">CRM ГК Хост</string>
+    <string name="title_app_name">News.company</string>
 
     <string name="profile_name">Александра Морозова</string>
     <string name="profile_position">WEB Developer</string>
